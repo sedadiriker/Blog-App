@@ -5,6 +5,7 @@ import {
   loginSuccess,
   registerSuccess,
   logoutSuccess,
+  updateSuccess,
 } from "../features/auhtSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -49,12 +50,27 @@ const useAuthRequest = () => {
       try {
         await axiosToken.get("/auth/logout");
         dispatch(logoutSuccess());
+        navigate("/")
       } catch (error) {
         dispatch(fetchFail());
       }
     };
+
+    //!update  user
+    const updateUser = async (id,userInfo) => {
+      dispatch(fetchStart())
+      try {
+        const { data } = await axiosToken.put(`/users/${id}`, userInfo);
+        dispatch(updateSuccess(data));
+        toastSuccessNotify("Profile updated successfully");
+      } catch (error) {
+        dispatch(fetchFail());
+        toastErrorNotify("Failed to update profile");
+        console.log(error)
+      }
+    }
   
-    return { login, register, logout };
+    return { login, register, logout,updateUser };
 }
 
 export default useAuthRequest

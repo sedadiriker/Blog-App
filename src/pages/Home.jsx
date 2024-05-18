@@ -19,7 +19,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Box py={5} px={3}>
+    <Box py={5} px={10}>
       <Grid container spacing={2}>
         {sliceBlogs.map((blog, index) => (
           <Grid

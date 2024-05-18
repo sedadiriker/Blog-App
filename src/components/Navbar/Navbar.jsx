@@ -8,6 +8,7 @@ import Drawer from "@mui/material/Drawer";
 import DrawerList from "./DrawerList";
 import UserMenu from "./UserMenu";
 import { useState } from "react";
+import { CardMedia } from "@mui/material";
 
 function ResponsiveAppBar() {
   const [open, setOpen] = useState(false);
@@ -17,41 +18,43 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "#E4D7CE" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          
           {/* MENU */}
           <Box sx={{ flexGrow: 1 }}>
             <Box>
               <MenuIcon
                 onClick={toggleDrawer(true)}
-                sx={{ color: "white", cursor: "pointer" }}
+                sx={{ color: "#467182", cursor: "pointer" }}
               />
             </Box>
-            <Drawer open={open} onClose={toggleDrawer(false)}>
-              <DrawerList toggleDrawer={toggleDrawer} />
+            <Drawer open={open} onClose={toggleDrawer(false)} sx={{
+              "& .MuiDrawer-paper": {
+                backgroundColor:"#7597A3"
+              }
+            }}>
+              <DrawerList toggleDrawer={toggleDrawer}/>
             </Drawer>
           </Box>
 
           {/* LOGO */}
+          <img src="/images/Logo.png" alt="Logo" style={{ marginRight: "8px", width:"50px" }} />
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            fontWeight={"bold"}
             sx={{
               mr: 2,
               display: "flex",
               fontFamily: "monospace",
-              fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "#467182",
               textDecoration: "none",
               flexGrow: 1,
             }}
           >
-            BLOGEST
+            LOGEST
           </Typography>
 
           {/* USER MENU */}

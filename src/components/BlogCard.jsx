@@ -16,34 +16,21 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ShareBlog from "./ShareBlog";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import useAxios from "../hooks/useAxios";
+import { useState } from "react";
 
 
-
-export default function BlogCard({ title, content, image, createdAt ,likes,comments,countOfVisitors,userId}) {
+export default function BlogCard({ title, content, image, createdAt ,likes,comments,countOfVisitors}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const {axiosBase, axiosToken} = useAxios()
 
-  const getUser = async () => {
-    try{
-      const {data} = await axiosToken(`/${userId}`)
-   return data.data
-    }catch(err){
-
-    }
-  }
+ 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-useEffect(() =>{
-  getUser()
-},[])
+
   return (
     <Card sx={{ maxWidth: 345, margin: "auto" }}>
       <CardHeader

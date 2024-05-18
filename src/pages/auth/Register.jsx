@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import {  Formik } from "formik";
 import { } from "react-router-dom";
-import RegisterForm, { registerSchema } from "../components/auth/RegisterForm";
-import useAuthRequest from "../hooks/useAuthRequest";
+import RegisterForm, { registerSchema } from "../../components/auth/RegisterForm";
+import useAuthRequest from "../../hooks/useAuthRequest";
 
 const Register = () => {
   const { register } = useAuthRequest();

@@ -16,18 +16,22 @@ const auhtSlice = createSlice({
     },
     loginSuccess: (state, { payload }) => {
       state.loading = false;
-      state.user = payload.user.username;
+      state.user = payload.user;
       state.token = payload.token;
     },
     registerSuccess: (state, { payload }) => {
       state.loading = false;
-      state.user = payload.user.username;
+      state.user = payload.user;
       state.token = payload.token;
     },
     logoutSuccess: (state) => {
       state.loading = false;
       state.user = "";
       state.token = "";
+    },
+    updateSuccess : (state,{payload}) => {
+      state.loading = false
+      state.user = {...state.user, ...payload} //! önceki verileri koru, değişenleri değiştir
     },
     fetchFail: (state) => {
       state.loading = false;
@@ -42,6 +46,7 @@ export const {
   fetchFail,
   registerSuccess,
   logoutSuccess,
+  updateSuccess
 } = auhtSlice.actions;
 
 export default auhtSlice.reducer;

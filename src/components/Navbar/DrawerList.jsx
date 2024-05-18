@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import FeedIcon from '@mui/icons-material/Feed';
+import FeedIcon from "@mui/icons-material/Feed";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
@@ -53,9 +53,13 @@ const DrawerList = ({ toggleDrawer }) => {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
+                  sx={{
+                    color: "#E4D7CE",
+                    ":hover": { backgroundColor: "#9FA2A7", color: "black" },
+                  }}
                 >
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText primary={page} />
+                  <ListItemIcon sx={{ color: "#E9EAED" }}>{icon}</ListItemIcon>
+                  <ListItemText primary={page.toUpperCase()}/>
                 </ListItemButton>
                 <Menu
                   id="basic-menu"
@@ -75,15 +79,43 @@ const DrawerList = ({ toggleDrawer }) => {
                   }}
                 >
                   {categories?.map((category) => (
-                    <MenuItem onClick={handleClose}>{category.name}</MenuItem>
+                    <Link
+                      to={`${path}/${category.name}`}
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        width: "100%",
+                      }}
+                    >
+                      <ListItemButton
+                        onClick={() => {
+                          handleClose();
+                          toggleDrawer(false);
+                        }}
+                      >
+                        {category.name}
+                      </ListItemButton>
+                    </Link>
                   ))}
                 </Menu>
               </>
             ) : (
-              <Link to={path} style={{textDecoration:"none", color:"black",width:"100%"}}>
-                <ListItemButton onClick={toggleDrawer(false)}>
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText primary={page} />
+              <Link
+                to={path}
+                style={{
+                  textDecoration: "none",
+                  width: "100%",
+                }}
+              >
+                <ListItemButton
+                  onClick={toggleDrawer(false)}
+                  sx={{
+                    color: "#E4D7CE",
+                    ":hover": { backgroundColor: "#9FA2A7", color: "black" },
+                  }}
+                >
+                  <ListItemIcon sx={{ color: "#E9EAED" }}>{icon}</ListItemIcon>
+                  <ListItemText primary={page.toUpperCase()} />
                 </ListItemButton>
               </Link>
             )}

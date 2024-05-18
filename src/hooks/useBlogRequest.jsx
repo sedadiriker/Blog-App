@@ -20,6 +20,7 @@ const useBlogRequest = () => {
       toastErrorNotify(`Failed to loading ${path}`);
         }
     }
+
     return {getRequest}
 }
 
