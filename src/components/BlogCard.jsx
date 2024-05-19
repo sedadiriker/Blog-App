@@ -15,6 +15,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ShareBlog from "./ShareBlog";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogCard({
   title,
@@ -24,9 +25,11 @@ export default function BlogCard({
   likes,
   comments,
   countOfVisitors,
+_id
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate()
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -140,6 +143,7 @@ export default function BlogCard({
             backgroundColor: "#E4D8BA",
             ":hover": { backgroundColor: "#76815B", color: "white" },
           }}
+          onClick={()=> navigate(`/blogdetail/${_id}`)}
         >
           Read More
         </Button>

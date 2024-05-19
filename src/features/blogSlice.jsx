@@ -4,6 +4,7 @@ const initialState = {
     blogs : [],
     categories  : [],
     comments : [],
+    users: [],
     currentPage : '',
     totalPages: 0,
     loading: false,

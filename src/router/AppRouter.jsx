@@ -11,6 +11,7 @@ import UserProfile from "../pages/User/UserProfile";
 import WriteBlog from "../pages/WriteBlog";
 import LatestBlogs from "../pages/LatestBlogs";
 import MyBlog from "../pages/User/MyBlog";
+import BlogDetail from "../pages/BlogDetail";
 
 const AppRouter = () => {
   return (
@@ -28,6 +29,7 @@ const AppRouter = () => {
             <Route path="writeblog" element={<WriteBlog />} />
             <Route path="latestblogs" element={<LatestBlogs />} />
             <Route path="myblog" element={<MyBlog />} />
+            <Route path="blogdetail/:id" element={<BlogDetail />} />
             <Route
               path="/categories/:categoryName"
               element={<CategoryPage />}
