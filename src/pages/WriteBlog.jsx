@@ -19,7 +19,7 @@ const WriteBlog = () => {
   })
   return (
     <Container sx={{py:5}}>
-      <Typography textAlign={'center'} variant="h5">Write A blog</Typography>
+      <Typography textAlign={'center'} variant="h6" color={"#723C45"} textTransform={'uppercase'} fontWeight={"bold"} pb={3}>Write A blog</Typography>
       <Box
       height={"100vh"}
       sx={{
@@ -43,8 +43,7 @@ const WriteBlog = () => {
             addRequest("blogs", values);
             actions.resetForm();
             actions.setSubmitting(false);
-            // handleClickPath("/stock/listfirms");
-            console.log(values)
+            // console.log(values)
           }}
         >
           {({
@@ -63,11 +62,11 @@ const WriteBlog = () => {
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
-                  backgroundColor: "#0551B670",
+                  backgroundColor: "#5B92A8",
                   py: "3rem",
                   px: "1.5rem",
                   borderRadius: "10px",
-                  width:{xs:"100%", md:"60%"}
+                  width:{xs:"100%", md:"90%"}
                 }}
               >
                  <TextField
@@ -245,8 +244,8 @@ const WriteBlog = () => {
                   variant="contained"
                   type="submit"
                   disabled={isSubmitting}
-                  color="primary"
-                  sx={{ width:{xs:"90%", md:"30%"}, m: "auto" }}
+                  
+                  sx={{ width:{xs:"90%", md:"30%"}, m: "auto", backgroundColor:"#FFE2A8", color:"black",":hover":{backgroundColor:"#FFE2A880"} }}
                 >
                   Write
                 </Button>

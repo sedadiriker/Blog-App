@@ -1,7 +1,7 @@
 import useAxios from './useAxios'
 import { useDispatch } from 'react-redux'
 import { fetchStart } from '../features/auhtSlice'
-import { addRequestSuccess, fetchFail, getRequestSuccess, paginationSuccess } from '../features/blogSlice'
+import { addRequestSuccess, fetchFail, getRequestSuccess, paginationSuccess, putRequestSuccess } from '../features/blogSlice'
 import { toastSuccessNotify, toastErrorNotify } from "../helper/ToastNotify";
 
 const useBlogRequest = () => {
@@ -36,6 +36,20 @@ const useBlogRequest = () => {
           }
     }
 
+    const putRequest = async(path,id,formData) => {
+        dispatch(fetchStart())
+    try{
+      const {data} = await axiosToken.put(`/${path}/${id}`,formData)
+      const updateData = data.new
+      dispatch(putRequestSuccess({path,updateData}))
+      toastSuccessNotify("Update successfully.");
+    }catch(err){
+      dispatch(fetchFail())
+      toastErrorNotify("Failed to update.");
+      console.log(err)
+    }
+    }
+
     const getBlogsPage = async (page, limit) => {
         dispatch(fetchStart());
     
@@ -48,7 +62,7 @@ const useBlogRequest = () => {
         }
     };
 
-    return {getRequest, addRequest, getBlogsPage}
+    return {getRequest, addRequest, getBlogsPage,putRequest}
 }
 
 export default useBlogRequest

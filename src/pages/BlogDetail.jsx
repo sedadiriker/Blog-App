@@ -1,37 +1,34 @@
-import { Avatar, Box, Container, Divider, Typography } from "@mui/material";
+import { Avatar, Box, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useBlogRequest from "../hooks/useBlogRequest";
 
 const BlogDetail = () => {
-  const [selectedBlog, setSelectedBlog] = useState(null);
-  const [writer, setWriter] = useState(null);
+    const [writer, setWriter] = useState(null);
   const { blogs, users } = useSelector((state) => state.blog);
-  const { getRequest } = useBlogRequest();
+  const { getRequest, putRequest } = useBlogRequest();
   const { id } = useParams();
+  const selectedBlog = blogs.find((blog) => blog._id === id);
 
   useEffect(() => {
     getRequest("blogs");
     getRequest("users");
   }, []);
 
-  useEffect(() => {
-    if (blogs) {
-      const blog = blogs.find((blog) => blog._id === id);
-      setSelectedBlog(blog);
-    }
-  }, [blogs, id]);
 
   useEffect(() => {
-    if (selectedBlog && users) {
       const writerUser = users.find((user) => user._id === selectedBlog.userId);
       setWriter(writerUser);
-    }
-  }, [selectedBlog, users]);
+  }, []);
 
-  console.log(writer);
 
+useEffect(()=>{
+    if (selectedBlog) {
+    putRequest("blogs", id, { countOfVisitors: selectedBlog.countOfVisitors + 1 })};
+},[])
+
+console.log(selectedBlog)
   return (
     <Container
       sx={{
@@ -94,7 +91,22 @@ const BlogDetail = () => {
           </Typography>
         </Box>
       </Box>
-      <Typography textAlign={"justify"}>{selectedBlog?.content}</Typography>
+      <Typography textAlign="justify">
+        <span
+          style={{
+            fontSize: "4rem",
+            marginLeft: "3rem",
+            float: "left",
+            marginRight: "10px",
+            lineHeight: "90%",
+            textShadow: "3px 3px #C0C0C0",
+            color:"#5B92A8"
+          }}
+        >
+          {selectedBlog?.content.slice(0, 1)}
+        </span>
+        {selectedBlog?.content.slice(1)}
+      </Typography>
     </Container>
   );
 };

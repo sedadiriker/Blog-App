@@ -32,6 +32,15 @@ const blogSlice = createSlice({
     state.currentPage = page;
     state.totalPages = total; 
   },
+  putRequestSuccess : (state, {payload:{path,updateData}}) => {
+    state.loading = false
+    state[path] = state[path].map(item => {
+      if(item.id === updateData._id){
+        return updateData
+      }
+      return item
+    })
+  },
     fetchFail: (state) => {
         state.loading = false
         state.error = true
@@ -39,6 +48,6 @@ const blogSlice = createSlice({
   }
 });
 
-export const {fetchStart,getRequestSuccess,addRequestSuccess,paginationSuccess,fetchFail} = blogSlice.actions
+export const {fetchStart,getRequestSuccess,addRequestSuccess,paginationSuccess,putRequestSuccess,fetchFail} = blogSlice.actions
 
 export default blogSlice.reducer

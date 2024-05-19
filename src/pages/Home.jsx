@@ -10,7 +10,7 @@ import { Container } from "@mui/material";
 
 const Home = () => {
   const { blogs, totalPages } = useSelector((state) => state.blog);
-  const { getBlogsPage } = useBlogRequest();
+  const { getBlogsPage,getRequest } = useBlogRequest();
   const [currentPage, setCurrentPage] = useState(1);
 
   console.log(blogs);
@@ -23,10 +23,13 @@ const Home = () => {
     setCurrentPage(page);
   };
 
+useEffect(()=>{
+  getRequest("blogs")
+},[])
   return (
     <Container sx={{ py: 5, display:"flex", flexDirection:"column", alignItems:"center", gap:3,  }}>
     <Box display={"flex"} flexWrap={"wrap"} rowGap={2}>
-      {blogs.map((blog) => (
+      {blogs?.map((blog) => (
         <BlogCard key={blog._id} {...blog} />
       ))}
     </Box>
