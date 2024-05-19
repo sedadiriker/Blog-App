@@ -13,7 +13,7 @@ const Home = () => {
   const { getBlogsPage } = useBlogRequest();
   const [currentPage, setCurrentPage] = useState(1);
 
-  // console.log(blogs);
+  console.log(blogs);
 
   useEffect(() => {
     getBlogsPage(currentPage, 8);
@@ -24,10 +24,10 @@ const Home = () => {
   };
 
   return (
-    <Box sx={{backgroundColor:"#E6DBD5"}}><Container sx={{ py: 5, display:"flex", flexDirection:"column", alignItems:"center", gap:3,  }}>
+    <Container sx={{ py: 5, display:"flex", flexDirection:"column", alignItems:"center", gap:3,  }}>
     <Box display={"flex"} flexWrap={"wrap"} rowGap={2}>
       {blogs.map((blog) => (
-        <BlogCard {...blog} />
+        <BlogCard key={blog._id} {...blog} />
       ))}
     </Box>
     <Stack spacing={2}>
@@ -37,7 +37,7 @@ const Home = () => {
         onChange={handleChangePage}
       />
     </Stack>
-  </Container></Box>
+  </Container>
   );
 };
 

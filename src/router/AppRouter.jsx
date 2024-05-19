@@ -7,9 +7,10 @@ import { CssBaseline } from "@mui/material";
 import PopularBlogs from "../pages/PopularBlogs";
 import CategoryPage from "../pages/CategoryPage";
 import PrivateRouter from "./PrivateRouter";
-import UserProfile from "../pages/auth/UserProfile";
+import UserProfile from "../pages/User/UserProfile";
 import WriteBlog from "../pages/WriteBlog";
 import LatestBlogs from "../pages/LatestBlogs";
+import MyBlog from "../pages/User/MyBlog";
 
 const AppRouter = () => {
   return (
@@ -26,6 +27,7 @@ const AppRouter = () => {
             <Route path="userprofile" element={<UserProfile />} />
             <Route path="writeblog" element={<WriteBlog />} />
             <Route path="latestblogs" element={<LatestBlogs />} />
+            <Route path="myblog" element={<MyBlog />} />
             <Route
               path="/categories/:categoryName"
               element={<CategoryPage />}

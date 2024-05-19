@@ -83,7 +83,10 @@ const UserMenu = () => {
                 <Typography textAlign="center">{setting}</Typography>
               </MenuItem>
             ) : (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              <MenuItem key={setting} onClick={()=>{
+                handleCloseUserMenu()
+                navigate("/myblog")
+              }}>
                 <Typography textAlign="center">{setting}</Typography>
               </MenuItem>
             )

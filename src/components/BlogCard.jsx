@@ -4,10 +4,8 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -18,12 +16,18 @@ import MenuItem from "@mui/material/MenuItem";
 import ShareBlog from "./ShareBlog";
 import { useState } from "react";
 
-
-export default function BlogCard({ title, content, image, createdAt ,likes,comments,countOfVisitors}) {
+export default function BlogCard({
+  title,
+  content,
+  image,
+  createdAt,
+  likes,
+  comments,
+  countOfVisitors,
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
- 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
@@ -32,9 +36,21 @@ export default function BlogCard({ title, content, image, createdAt ,likes,comme
   };
 
   return (
-    <Card sx={{ width:{xs:320, md:550}, margin: "auto", border:"1px solid #46718250", boxShadow:"5px -5px 15px gray" }}>
+    <Card
+      sx={{
+        width: { xs: 320, md: 550 },
+        margin: "auto",
+        boxShadow: "none",
+        ":hover": { boxShadow: "1px 2px 25px gray" },
+        ":hover .card-image": {
+          transform: "scale(1.02)",
+        },
+        overflow: "hidden",
+        backgroundColor:"#E6DAD570"
+      }}
+    >
       <CardHeader
-      sx={{height:90, position:"relative"}}
+        sx={{ height: 90, position: "relative" }}
         action={
           <>
             <IconButton
@@ -57,44 +73,76 @@ export default function BlogCard({ title, content, image, createdAt ,likes,comme
               }}
             >
               <MenuItem onClick={handleClose}>
-                <ShareBlog title={title} content={content} image={image}/>
+                <ShareBlog title={title} content={content} image={image} />
               </MenuItem>
             </Menu>
           </>
         }
         title={
-          <Box sx={{ fontSize: "1.2rem", fontWeight: "bold", color: "#723C46" }}>
+          <Box
+            sx={{ fontSize: "1rem", fontWeight: "bold", color: "#723C46", textTransform:"uppercase" }}
+          >
             {title}
           </Box>
         }
-        subheader={
-          <Box sx={{ fontSize: "14px", color: "green",position:"absolute", bottom:0, right:10 }}>
-            {new Date(createdAt).toLocaleString("tr-TR")}
-          </Box>
-        }
+        // subheader={
+        //   <Box
+        //     sx={{
+        //       fontSize: "14px",
+        //       color: "#5B92A8",
+        //       position: "absolute",
+        //       bottom: 0,
+        //       left: 15,
+        //     }}
+        //   >
+        //     {new Date(createdAt).toLocaleString("tr-TR")}
+        //   </Box>
+        // }
       />
-      <CardMedia component="img" image={image} alt="Paella dish" sx={{height:{xs:100, md:250}, px:1, objectFit:"cover"}} />
-      <CardContent sx={{height:{xs:200,md:150}, textAlign:"justify"}}>
-        <Typography variant="body2" color="text.secondary">
+      <CardMedia
+        className="card-image"
+        component="img"
+        image={image}
+        alt="Paella dish"
+        sx={{ height: { xs: 100, md: 250 }, px: 1, objectFit: "cover", transition:"all 1s ease-in" }}
+      />
+      <CardContent sx={{ height: { xs: 200, md: 150 }, textAlign: "justify" }}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ lineHeight: "1.3rem" }}
+        >
           {`${content}`.slice(0, 300) + "..."}
         </Typography>
       </CardContent>
       <CardActions
         disableSpacing
-        sx={{ display: "flex", justifyContent: "space-between" , height:{xs:50,md:50}}}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          height: { xs: 50, md: 50 },
+        }}
       >
         <Box>
-          <IconButton aria-label="add to favorites">
-           {likes.length} <FavoriteIcon />
+          <IconButton aria-label="add to favorites" sx={{ fontSize: "1rem" }}>
+            {likes.length} <FavoriteIcon sx={{ color: "#A73159" }} />
           </IconButton>
-          <IconButton aria-label="comment">
-           {comments.length} <InsertCommentIcon />
+          <IconButton aria-label="comment" sx={{ fontSize: "1rem" }}>
+            {comments.length} <InsertCommentIcon sx={{ color: "#C96F1F" }} />
           </IconButton>
-          <IconButton aria-label="follow">
-           {countOfVisitors} <VisibilityIcon />
+          <IconButton aria-label="follow" sx={{ fontSize: "1rem" }}>
+            {countOfVisitors} <VisibilityIcon sx={{ color: "#385E40" }} />
           </IconButton>
         </Box>
-        <Button>Read More</Button>
+        <Button
+          sx={{
+            color: "#344A58",
+            backgroundColor: "#E4D8BA",
+            ":hover": { backgroundColor: "#76815B", color: "white" },
+          }}
+        >
+          Read More
+        </Button>
       </CardActions>
     </Card>
   );
