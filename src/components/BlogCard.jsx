@@ -24,21 +24,17 @@ export default function BlogCard({ title, content, image, createdAt ,likes,comme
   const open = Boolean(anchorEl);
 
  
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   return (
-    <Card sx={{ maxWidth: 345, margin: "auto" }}>
+    <Card sx={{ width:{xs:320, md:550}, margin: "auto", border:"1px solid #46718250", boxShadow:"5px -5px 15px gray" }}>
       <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
-        }
+      sx={{height:90, position:"relative"}}
         action={
           <>
             <IconButton
@@ -66,18 +62,26 @@ export default function BlogCard({ title, content, image, createdAt ,likes,comme
             </Menu>
           </>
         }
-        title={title}
-        subheader={`${new Date(createdAt).toLocaleString("tr-TR")}`}
+        title={
+          <Box sx={{ fontSize: "1.2rem", fontWeight: "bold", color: "#723C46" }}>
+            {title}
+          </Box>
+        }
+        subheader={
+          <Box sx={{ fontSize: "14px", color: "green",position:"absolute", bottom:0, right:10 }}>
+            {new Date(createdAt).toLocaleString("tr-TR")}
+          </Box>
+        }
       />
-      <CardMedia component="img" height="194" image={image} alt="Paella dish" />
-      <CardContent>
+      <CardMedia component="img" image={image} alt="Paella dish" sx={{height:{xs:100, md:250}, px:1, objectFit:"cover"}} />
+      <CardContent sx={{height:{xs:200,md:150}, textAlign:"justify"}}>
         <Typography variant="body2" color="text.secondary">
           {`${content}`.slice(0, 300) + "..."}
         </Typography>
       </CardContent>
       <CardActions
         disableSpacing
-        sx={{ display: "flex", justifyContent: "space-between" }}
+        sx={{ display: "flex", justifyContent: "space-between" , height:{xs:50,md:50}}}
       >
         <Box>
           <IconButton aria-label="add to favorites">

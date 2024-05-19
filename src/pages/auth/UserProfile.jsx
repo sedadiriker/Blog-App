@@ -9,6 +9,8 @@ const UserProfile = () => {
   const { user } = useSelector((state) => state.auth);
   const { updateUser } = useAuthRequest();
   const { image, username, firstName, lastName, email, city, bio, _id } = user;
+console.log(user)
+console.log(editedUser)
 
   const handleEdit = () => {
     setEditedUser({ username, firstName, lastName, email, city, bio });
@@ -19,7 +21,6 @@ const UserProfile = () => {
     setEditMode(false);
     updateUser(_id, editedUser);
   };
-console.log(editedUser)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedUser({ ...editedUser, [name]: value });

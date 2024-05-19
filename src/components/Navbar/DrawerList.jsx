@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import useBlogRequest from "../../hooks/useBlogRequest";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import NoteAltIcon from '@mui/icons-material/NoteAlt';
 
 const DrawerList = ({ toggleDrawer }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -33,6 +34,7 @@ const DrawerList = ({ toggleDrawer }) => {
     { page: "Categories", icon: <CategoryIcon />, path: "/categories" },
     { page: "Popular Blogs", icon: <StarIcon />, path: "/popularblogs" },
     { page: "Latest Blogs", icon: <FeedIcon />, path: "/latestblogs" },
+    { page: "Write a Blog", icon: <NoteAltIcon />, path: "/writeblog" },
     { page: "About", icon: <InfoIcon />, path: "/about" },
     { page: "Contact", icon: <ContactMailIcon />, path: "/contact" },
   ];

@@ -32,6 +32,8 @@ const auhtSlice = createSlice({
     updateSuccess : (state,{payload}) => {
       state.loading = false
       state.user = {...state.user, ...payload} //! önceki verileri koru, değişenleri değiştir
+      // state.token = payload.token;
+
     },
     fetchFail: (state) => {
       state.loading = false;

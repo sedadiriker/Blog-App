@@ -14,7 +14,6 @@ const MostCommentedBlogs = () => {
     const mostCommentedBlogs = blogs
     .slice()
     .sort((a,b) => b.comments.length - a.comments.length)
-    console.log(mostCommentedBlogs)
   
     const blogPosts = [
       { title: "Blog Post 1", content: "Content for Blog Post 1" },

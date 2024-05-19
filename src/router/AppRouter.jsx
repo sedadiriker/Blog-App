@@ -8,6 +8,8 @@ import PopularBlogs from "../pages/PopularBlogs";
 import CategoryPage from "../pages/CategoryPage";
 import PrivateRouter from "./PrivateRouter";
 import UserProfile from "../pages/auth/UserProfile";
+import WriteBlog from "../pages/WriteBlog";
+import LatestBlogs from "../pages/LatestBlogs";
 
 const AppRouter = () => {
   return (
@@ -22,6 +24,8 @@ const AppRouter = () => {
           <Route path="" element={<PrivateRouter/>}>
             <Route path="popularblogs" element={<PopularBlogs />} />
             <Route path="userprofile" element={<UserProfile />} />
+            <Route path="writeblog" element={<WriteBlog />} />
+            <Route path="latestblogs" element={<LatestBlogs />} />
             <Route
               path="/categories/:categoryName"
               element={<CategoryPage />}

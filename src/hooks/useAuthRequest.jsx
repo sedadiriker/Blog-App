@@ -61,7 +61,8 @@ const useAuthRequest = () => {
       dispatch(fetchStart())
       try {
         const { data } = await axiosToken.put(`/users/${id}`, userInfo);
-        dispatch(updateSuccess(data));
+        dispatch(updateSuccess(data.new));
+        console.log("gelen veri",data.new)
         toastSuccessNotify("Profile updated successfully");
       } catch (error) {
         dispatch(fetchFail());

@@ -63,30 +63,37 @@ const UserMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) =>
-          setting === "Logout" ? (
-            <MenuItem
-              key={setting}
-              onClick={() => {
-                handleCloseUserMenu();
-                logout();
-              }}
-            >
-              <Typography textAlign="center">{setting}</Typography>
-            </MenuItem>
-          ) : setting === "Profile" ? (
-            <MenuItem key={setting} onClick={()=>{
-              handleCloseUserMenu()
-              navigate("/userprofile")
-            }}>
-              <Typography textAlign="center">{setting}</Typography>
-            </MenuItem>
-          ) : (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-              <Typography textAlign="center">{setting}</Typography>
-            </MenuItem>
-          )
-        )}
+        {
+          user ? (settings.map((setting) =>
+            setting === "Logout" ? (
+              <MenuItem
+                key={setting}
+                onClick={() => {
+                  handleCloseUserMenu();
+                  logout();
+                }}
+              >
+                <Typography textAlign="center">{setting}</Typography>
+              </MenuItem>
+            ) : setting === "Profile" ? (
+              <MenuItem key={setting} onClick={()=>{
+                handleCloseUserMenu()
+                navigate("/userprofile")
+              }}>
+                <Typography textAlign="center">{setting}</Typography>
+              </MenuItem>
+            ) : (
+              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">{setting}</Typography>
+              </MenuItem>
+            )
+          )) : (<MenuItem  onClick={()=>{
+            handleCloseUserMenu()
+            navigate("/login")
+          }}>
+            <Typography textAlign="center">Login</Typography>
+          </MenuItem>)
+        }
       </Menu>
     </Box>
   );

@@ -1,7 +1,7 @@
 import useAxios from './useAxios'
 import { useDispatch } from 'react-redux'
 import { fetchStart } from '../features/auhtSlice'
-import { fetchFail, getRequestSuccess } from '../features/blogSlice'
+import { addRequestSuccess, fetchFail, getRequestSuccess, paginationSuccess } from '../features/blogSlice'
 import { toastSuccessNotify, toastErrorNotify } from "../helper/ToastNotify";
 
 const useBlogRequest = () => {
@@ -21,7 +21,34 @@ const useBlogRequest = () => {
         }
     }
 
-    return {getRequest}
+    const addRequest = async(path,formData) => {
+        dispatch(fetchStart())
+        try{
+            const {data} = await axiosToken.post(`/${path}/`,formData)
+            const addData = data.new
+            dispatch(addRequestSuccess({path,addData}))
+            getRequest(path)
+            toastSuccessNotify("Added Blog successfully.");
+          }catch(err){
+            dispatch(fetchFail())
+            toastErrorNotify("Failed to add blog.");
+            console.log(err)
+          }
+    }
+
+    const getBlogsPage = async (page, limit) => {
+        dispatch(fetchStart());
+    
+        try {
+            const { data } = await axiosToken(`/blogs?page=${page}&limit=${limit}`);
+            dispatch(paginationSuccess(data));
+        } catch (error) {
+            dispatch(fetchFail());
+            toastErrorNotify(`Failed to load`);
+        }
+    };
+
+    return {getRequest, addRequest, getBlogsPage}
 }
 
 export default useBlogRequest
