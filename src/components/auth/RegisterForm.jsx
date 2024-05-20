@@ -323,7 +323,7 @@ const RegisterForm = ({
           Register
         </Button>
         <Box sx={{ textAlign: "center", mt: 2 }}>
-          <Link to="/" style={{ color: "gray" }}>
+          <Link to="/login" style={{ color: "gray" }}>
             Do you have an account?
           </Link>
         </Box>
