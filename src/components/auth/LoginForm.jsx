@@ -46,7 +46,7 @@ const LoginForm = () => {
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            backgroundColor: "#A3C2CD",
             py: "3rem",
             px: "1.5rem",
             borderRadius: "10px",
@@ -123,13 +123,12 @@ const LoginForm = () => {
             variant="contained"
             type="submit"
             disabled={isSubmitting}
-            color="primary"
-            sx={{ width: "30%", m: "auto" }}
+            sx={{ width: "30%", m: "auto", color:"gray", backgroundColor:"#E4D7BA", ":hover":{backgroundColor:"#E4D7BA70"} }}
           >
             Login
           </Button>
           <Box sx={{ textAlign: "center", mt: 2 }}>
-            <Link to="/register" style={{ color: "#a0d6e8" }}>
+            <Link to="/register" style={{ color: "gray" }}>
               Do you have not an account?
             </Link>
           </Box>

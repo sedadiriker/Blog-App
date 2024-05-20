@@ -56,9 +56,6 @@ const RegisterForm = ({
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
   return (
     <Form>
       <Box
@@ -67,7 +64,7 @@ const RegisterForm = ({
           display: "flex",
           flexDirection: "column",
           gap: 2,
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
+          backgroundColor: "#A3C2CD",
           py: "3rem",
           px: "1.5rem",
           borderRadius: "10px",
@@ -198,8 +195,8 @@ const RegisterForm = ({
             },
           }}
         />
-        <FormControl  variant="outlined">
-          <InputLabel htmlFor="password">
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="password" sx={{ color: "white" }}>
             Password
           </InputLabel>
           <OutlinedInput
@@ -210,6 +207,7 @@ const RegisterForm = ({
             onBlur={handleBlur}
             type={showPassword ? "text" : "password"}
             error={touched.password && Boolean(errors.password)}
+            helperText={touched.password && errors.password}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -217,16 +215,41 @@ const RegisterForm = ({
                   onClick={handleClickShowPassword}
                   edge="end"
                 >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? (
+                    <VisibilityOff sx={{ color: "white" }} />
+                  ) : (
+                    <Visibility sx={{ color: "white" }} />
+                  )}
                 </IconButton>
               </InputAdornment>
             }
             label="Password"
+            sx={{
+              color: "white",
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#37B3E2",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#37B3E2",
+              },
+            }}
+            inputProps={{
+              sx: {
+                color: "white",
+              },
+            }}
+            labelProps={{
+              sx: {
+                color: "white",
+              },
+            }}
           />
-          <FormHelperText>
-          {touched.password && errors.password}
-          </FormHelperText>
+          <FormHelperText>{touched.password && errors.password}</FormHelperText>
         </FormControl>
+
         <TextField
           label="İmage "
           name="image"
@@ -289,12 +312,18 @@ const RegisterForm = ({
           variant="contained"
           type="submit"
           color="primary"
-          sx={{ width: "30%", m: "auto" }}
+          sx={{
+            width: "30%",
+            m: "auto",
+            color: "gray",
+            backgroundColor: "#E4D7BA",
+            ":hover": { backgroundColor: "#E4D7BA70" },
+          }}
         >
           Register
         </Button>
         <Box sx={{ textAlign: "center", mt: 2 }}>
-          <Link to="/" style={{ color: "#a0d6e8" }}>
+          <Link to="/" style={{ color: "gray" }}>
             Do you have an account?
           </Link>
         </Box>

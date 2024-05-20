@@ -35,14 +35,14 @@ const Register = () => {
           zIndex: -1,
         }}
       />
-      <Container sx={{ display: "flex", flexDirection: "column", gap: "5rem" }}>
+      <Container sx={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         <Typography
           textAlign={"center"}
-          color={"white"}
+          color={"#A5292A80"}
           fontWeight={"bold"}
+          textTransform={"uppercase"}
           sx={{
-            fontSize: { xs: "2rem", md: "3rem" },
-            WebkitTextStroke: "1px #1876D1",
+            fontSize: { xs: "2rem", md: "2.2rem" },
           }}
         >
          register
