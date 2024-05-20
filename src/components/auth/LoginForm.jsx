@@ -118,11 +118,7 @@ const LoginForm = () => {
               },
             }}
           />
-          {/* <Box style={{ textAlign: "right" }}>
-              <Link style={{ color: "#11B4BB", display: "inline" }}>
-                Forgot password
-              </Link>
-            </Box> */}
+      
           <Button
             variant="contained"
             type="submit"

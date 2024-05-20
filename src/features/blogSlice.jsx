@@ -22,9 +22,13 @@ const blogSlice = createSlice({
         state.loading = false
         state[path] = getData
     },
-    addRequestSuccess : (state ,{payload:{path,addData}}) => {
+    addRequestSuccess : (state ,{payload:{addData}}) => {
       state.loading = false
-      state[path].push(addData)
+      state.comments.push(addData)
+    },
+    addCommentSucess : (state,{addData}) => {
+      state.loading = false
+      state.comments.push(addData)
     },
     paginationSuccess: (state, { payload: { data, details:{page, pages:{total},}} }) => {
       state.loading = false;
@@ -48,6 +52,6 @@ const blogSlice = createSlice({
   }
 });
 
-export const {fetchStart,getRequestSuccess,addRequestSuccess,paginationSuccess,putRequestSuccess,fetchFail} = blogSlice.actions
+export const {fetchStart,getRequestSuccess,addRequestSuccess,paginationSuccess,putRequestSuccess,addCommentSucess,fetchFail} = blogSlice.actions
 
 export default blogSlice.reducer

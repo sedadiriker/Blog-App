@@ -2,10 +2,12 @@ import { Box, CardMedia, Grid, Paper, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import useBlogRequest from "../hooks/useBlogRequest";
+import { useNavigate, useParams } from 'react-router-dom';
 
 const LatestBlogs = () => {
     const { blogs } = useSelector(state => state.blog)
     const { getRequest } = useBlogRequest()
+    const navigate = useNavigate()
 
     useEffect(() => {
         getRequest("blogs")
@@ -32,6 +34,7 @@ const LatestBlogs = () => {
                                         fontSize:{xs:"8px",md:"1rem"},
                                     },
                                 }}
+                                onClick={()=>navigate(`/blogdetail/${blog._id}`)}
                             >
                                 <CardMedia
                                     component="img"

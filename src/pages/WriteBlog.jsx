@@ -62,7 +62,7 @@ const WriteBlog = () => {
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
-                  backgroundColor: "#5B92A8",
+                  backgroundColor: "#5B92A890",
                   py: "3rem",
                   px: "1.5rem",
                   borderRadius: "10px",

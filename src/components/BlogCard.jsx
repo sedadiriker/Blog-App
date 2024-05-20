@@ -88,19 +88,7 @@ _id
             {title}
           </Box>
         }
-        // subheader={
-        //   <Box
-        //     sx={{
-        //       fontSize: "14px",
-        //       color: "#5B92A8",
-        //       position: "absolute",
-        //       bottom: 0,
-        //       left: 15,
-        //     }}
-        //   >
-        //     {new Date(createdAt).toLocaleString("tr-TR")}
-        //   </Box>
-        // }
+        
       />
       <CardMedia
         className="card-image"

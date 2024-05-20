@@ -3,7 +3,7 @@ import MostCommentedBlogs from "../components/MostCommentedBlogs";
 const PopularBlogs = () => {
   return (
     <Box display={"flex"}  flexDirection={"column"} alignItems={"center"}>
-      <Typography variant="h4">Popular Blogs</Typography>
+      <Typography pt={5} textAlign={'center'} variant="h6" color={"#723C45"} textTransform={'uppercase'} fontWeight={"bold"}>Popular Blogs</Typography>
       <MostCommentedBlogs/>
     </Box>
   )
