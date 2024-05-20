@@ -57,6 +57,10 @@ const blogSlice = createSlice({
         return blog;
     });
   },
+  deleteSuccess:(state,{payload:{id}})=>{
+    state.loading=false
+    state.blogs = state.blogs.filter(item => item._id === id)
+  },
     fetchFail: (state) => {
         state.loading = false
         state.error = true
@@ -64,6 +68,6 @@ const blogSlice = createSlice({
   }
 });
 
-export const {fetchStart,getRequestSuccess,addRequestSuccess,paginationSuccess,putRequestSuccess,addCommentSucess,postLikeSuccess,fetchFail} = blogSlice.actions
+export const {fetchStart,getRequestSuccess,addRequestSuccess,paginationSuccess,putRequestSuccess,addCommentSucess,postLikeSuccess,deleteSuccess,fetchFail} = blogSlice.actions
 
 export default blogSlice.reducer

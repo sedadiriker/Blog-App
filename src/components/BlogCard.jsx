@@ -26,13 +26,12 @@ export default function BlogCard({
   likes,
   comments,
   countOfVisitors,
-_id
+_id,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate()
   const{postLike}=useBlogRequest()
-
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };

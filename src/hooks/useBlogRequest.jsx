@@ -4,6 +4,7 @@ import { fetchStart } from "../features/auhtSlice";
 import {
   addCommentSucess,
   addRequestSuccess,
+  deleteSuccess,
   fetchFail,
   getRequestSuccess,
   paginationSuccess,
@@ -11,10 +12,12 @@ import {
   putRequestSuccess,
 } from "../features/blogSlice";
 import { toastSuccessNotify, toastErrorNotify } from "../helper/ToastNotify";
+import { useNavigate } from "react-router-dom";
 
 const useBlogRequest = () => {
   const { axiosBase, axiosToken } = useAxios();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const getRequest = async (path, limit = null) => {
     dispatch(fetchStart());
@@ -102,7 +105,22 @@ const useBlogRequest = () => {
     }
   }
 
-  return { getRequest, addRequest, getBlogsPage, putRequest, addComment,postLike };
+  const deleteRequest = async (id) => {
+    dispatch(fetchStart());
+    try {
+      await axiosToken.delete(`/blogs/${id}`); 
+      dispatch(deleteSuccess({id}))
+      getRequest("blogs");
+      navigate("/myblog")
+      toastSuccessNotify("deleted successfully.");
+    } catch (error) {
+      dispatch(fetchFail());
+      toastErrorNotify("Failed to delete.");
+      console.log(error);
+    }
+  }
+
+  return { getRequest, addRequest, getBlogsPage, putRequest, addComment,postLike,deleteRequest };
 };
 
 export default useBlogRequest;
