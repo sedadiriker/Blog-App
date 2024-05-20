@@ -120,7 +120,7 @@ _id
           <IconButton aria-label="add to favorites" sx={{ fontSize: "1rem" }} onClick={()=>postLike(_id)}>
             {likes.length} <FavoriteIcon sx={{ color: "#A73159" }} />
           </IconButton>
-          <IconButton aria-label="comment" sx={{ fontSize: "1rem" }}>
+          <IconButton aria-label="comment" sx={{ fontSize: "1rem" }} onClick={()=> navigate(`/blogdetail/${_id}`)}>
             {comments.length} <InsertCommentIcon sx={{ color: "#C96F1F" }} />
           </IconButton>
           <IconButton aria-label="follow" sx={{ fontSize: "1rem" }}>
