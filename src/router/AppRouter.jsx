@@ -12,6 +12,7 @@ import WriteBlog from "../pages/WriteBlog";
 import LatestBlogs from "../pages/LatestBlogs";
 import MyBlog from "../pages/User/MyBlog";
 import BlogDetail from "../pages/BlogDetail";
+import Footer from "../components/Footer";
 
 const AppRouter = () => {
   return (
@@ -36,6 +37,7 @@ const AppRouter = () => {
             />
           </Route>
         </Routes>
+        <Footer/>
       </Router>
     </>
   );

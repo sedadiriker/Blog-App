@@ -17,7 +17,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#A6471495",py:2}}>
+    <AppBar position="static" sx={{ backgroundColor: "#A6471490",py:2}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* MENU */}
