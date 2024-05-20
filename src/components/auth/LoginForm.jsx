@@ -10,8 +10,6 @@ const LoginForm = () => {
       .required("Username is required"),
     password: string()
       .required("Password is required")
-      .min(6, "Password must be at least 6 characters")
-      .max(12, "Password must be at most 10 characters")
       .matches(/\d+/, "The password must contain at least one number")
       .matches(
         /[a-z]+/,
