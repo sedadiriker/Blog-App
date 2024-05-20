@@ -7,6 +7,7 @@ import {
   fetchFail,
   getRequestSuccess,
   paginationSuccess,
+  postLikeSuccess,
   putRequestSuccess,
 } from "../features/blogSlice";
 import { toastSuccessNotify, toastErrorNotify } from "../helper/ToastNotify";
@@ -88,7 +89,20 @@ const useBlogRequest = () => {
     }
   };
 
-  return { getRequest, addRequest, getBlogsPage, putRequest, addComment };
+  const postLike = async(blogId)=>{
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosToken.post(`/blogs/${blogId}/postLike`);
+      dispatch(postLikeSuccess({data,blogId}));
+      getRequest("blogs")
+    } catch (err) {
+      dispatch(fetchFail());
+      toastErrorNotify("Failed to add .");
+      console.log(err);
+    }
+  }
+
+  return { getRequest, addRequest, getBlogsPage, putRequest, addComment,postLike };
 };
 
 export default useBlogRequest;

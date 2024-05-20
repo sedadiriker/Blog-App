@@ -24,7 +24,7 @@ const BlogDetail = () => {
   const [writer, setWriter] = useState(null);
   const { blogs, users, comments } = useSelector((state) => state.blog);
   const{user}=useSelector(state=>state.auth)
-  const { getRequest, putRequest, addComment } = useBlogRequest();
+  const { getRequest, putRequest, addComment,postLike } = useBlogRequest();
   const { id } = useParams();
 
   const selectedBlog = blogs.find((blog) => blog._id === id);
@@ -131,7 +131,7 @@ const BlogDetail = () => {
         {selectedBlog?.content.slice(1)}
       </Typography>
       <Box justifySelf="flex-start" sx={{ width: "100%" }}>
-        <IconButton aria-label="add to favorites" sx={{ fontSize: "1rem" }}>
+        <IconButton aria-label="add to favorites" sx={{ fontSize: "1rem" }} onClick={()=>postLike(id)}>
           {selectedBlog?.likes.length}{" "}
           <FavoriteIcon sx={{ color: "#A73159" }} />
         </IconButton>

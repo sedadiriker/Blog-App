@@ -16,12 +16,13 @@ import MenuItem from "@mui/material/MenuItem";
 import ShareBlog from "./ShareBlog";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import useBlogRequest from "../hooks/useBlogRequest";
 
 export default function BlogCard({
   title,
   content,
   image,
-  createdAt,
   likes,
   comments,
   countOfVisitors,
@@ -30,6 +31,7 @@ _id
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate()
+  const{postLike}=useBlogRequest()
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -115,7 +117,7 @@ _id
         }}
       >
         <Box>
-          <IconButton aria-label="add to favorites" sx={{ fontSize: "1rem" }}>
+          <IconButton aria-label="add to favorites" sx={{ fontSize: "1rem" }} onClick={()=>postLike(_id)}>
             {likes.length} <FavoriteIcon sx={{ color: "#A73159" }} />
           </IconButton>
           <IconButton aria-label="comment" sx={{ fontSize: "1rem" }}>

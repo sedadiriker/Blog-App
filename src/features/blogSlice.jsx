@@ -45,6 +45,18 @@ const blogSlice = createSlice({
       return item
     })
   },
+  postLikeSuccess:(state, {payload:{data:{countOfLikes},blogId}})=>{
+    state.loading = false;
+    state.blogs = state.blogs.map(blog => {
+        if (blog.id === blogId) {
+            return {
+                ...blog,
+                countOfLikes
+            };
+        }
+        return blog;
+    });
+  },
     fetchFail: (state) => {
         state.loading = false
         state.error = true
@@ -52,6 +64,6 @@ const blogSlice = createSlice({
   }
 });
 
-export const {fetchStart,getRequestSuccess,addRequestSuccess,paginationSuccess,putRequestSuccess,addCommentSucess,fetchFail} = blogSlice.actions
+export const {fetchStart,getRequestSuccess,addRequestSuccess,paginationSuccess,putRequestSuccess,addCommentSucess,postLikeSuccess,fetchFail} = blogSlice.actions
 
 export default blogSlice.reducer
