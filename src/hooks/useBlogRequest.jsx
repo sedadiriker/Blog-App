@@ -5,6 +5,7 @@ import {
   addCommentSucess,
   addRequestSuccess,
   deleteSuccess,
+  editSuccess,
   fetchFail,
   getRequestSuccess,
   paginationSuccess,
@@ -120,7 +121,22 @@ const useBlogRequest = () => {
     }
   }
 
-  return { getRequest, addRequest, getBlogsPage, putRequest, addComment,postLike,deleteRequest };
+  const editRequest = async (id,formData) => {
+    dispatch(fetchStart())
+    try{
+      const {data} = await axiosToken.put(`/blogs/${id}`,formData)
+      const updateData = data.new
+      dispatch(editSuccess({updateData}))
+      getRequest("blogs")
+      toastSuccessNotify("Update successfully.");
+    }catch(err){
+      dispatch(fetchFail())
+      toastErrorNotify("Failed to update.");
+      console.log(err)
+    }
+  }
+
+  return { getRequest, addRequest, getBlogsPage, putRequest, addComment,postLike,deleteRequest,editRequest };
 };
 
 export default useBlogRequest;

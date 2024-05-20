@@ -112,7 +112,7 @@ const WriteBlog = () => {
                     },
                   }}
                   variant="outlined"
-                  value={values.quantity}
+                  value={values.image}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={touched.image && Boolean(errors.image)}

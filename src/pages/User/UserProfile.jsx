@@ -44,7 +44,6 @@ console.log(editedUser)
           display: "flex",
           justifyContent: "center",
         }}
-        border={4}
       >
         {image ? (
           <img style={{ width: "50%" }} src={image} alt={username} />
@@ -85,9 +84,9 @@ console.log(editedUser)
         }}
       >
         {!editMode ? (
-          <Button onClick={handleEdit}>Edit Profile</Button>
+          <Button onClick={handleEdit} sx={{color:"green"}}>Edit Profile</Button>
         ) : (
-          <Button onClick={handleSaveEdit}>Save Edit</Button>
+          <Button onClick={handleSaveEdit} sx={{color:"green"}}>Save Edit</Button>
         )}
       </Box>
     </Container>

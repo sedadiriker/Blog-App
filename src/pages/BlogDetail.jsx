@@ -18,24 +18,34 @@ import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import { Form, Formik } from "formik";
 import { object, string } from "yup";
 import ConfirmModal from "../components/ConfirmModal";
+import EditBlogModal from "../components/EditBlogModal";
 const BlogDetail = () => {
   const commentSchema = object({
     comment: string().required("Comment is required"),
   });
-  const [showModal, setShowModal] = useState(false);
-
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const handleDelete = () => {
-    setShowModal(true);
+    setShowDeleteModal(true);
   };
-  const handleCloseModal = () => {
-    setShowModal(false);
+
+  const handleEdit = () => {
+    setShowEditModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
   };
 
   const [writer, setWriter] = useState(null);
   const [showComment, setShowComment] = useState(false);
   const { blogs, users, comments } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
-  const { getRequest, putRequest, addComment, postLike, deleteRequest } =
+  const { getRequest, putRequest, addComment, postLike, deleteRequest,editRequest } =
     useBlogRequest();
   const { id } = useParams();
 
@@ -45,6 +55,10 @@ const BlogDetail = () => {
 
   const handleConfirmDelete = () => {
     deleteRequest(selectedBlog?._id)
+    setShowComment(false);
+  };
+  
+  const handleConfirmEdit = () => {
     setShowComment(false);
   };
   useEffect(() => {
@@ -307,7 +321,7 @@ const BlogDetail = () => {
       )}
       {user._id === selectedBlog?.userId ? (
         <Box>
-          <Button sx={{ color: "green" }}>Update</Button>
+          <Button sx={{ color: "green" }} onClick={handleEdit}>Update</Button>
           <Button sx={{ color: "brown" }} onClick={handleDelete}>
             Delete
           </Button>
@@ -316,10 +330,16 @@ const BlogDetail = () => {
         ""
       )}
       <ConfirmModal
-        open={showModal}
-        onClose={handleCloseModal}
+        open={showDeleteModal}
+        onClose={handleCloseDeleteModal}
         confirm={handleConfirmDelete}
         message="Are you sure you want to delete this blog?"
+      />
+      <EditBlogModal
+      open={showEditModal}
+      onClose={handleCloseEditModal}
+      confirm={handleConfirmEdit}
+      {...selectedBlog}
       />
     </Container>
   );
