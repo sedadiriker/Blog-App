@@ -22,6 +22,7 @@ const BlogDetail = () => {
     comment: string().required("Comment is required"),
   });
   const [writer, setWriter] = useState(null);
+  const[showComment,setShowComment] = useState(false)
   const { blogs, users, comments } = useSelector((state) => state.blog);
   const{user}=useSelector(state=>state.auth)
   const { getRequest, putRequest, addComment,postLike } = useBlogRequest();
@@ -135,7 +136,7 @@ const BlogDetail = () => {
           {selectedBlog?.likes.length}{" "}
           <FavoriteIcon sx={{ color: "#A73159" }} />
         </IconButton>
-        <IconButton aria-label="comment" sx={{ fontSize: "1rem" }}>
+        <IconButton aria-label="comment" sx={{ fontSize: "1rem" }} onClick={()=>setShowComment(!showComment)}>
           {selectedBlog?.comments.length}{" "}
           <InsertCommentIcon sx={{ color: "#C96F1F" }} />
         </IconButton>
@@ -144,7 +145,8 @@ const BlogDetail = () => {
           <VisibilityIcon sx={{ color: "#385E40" }} />
         </IconButton>
       </Box>
-      <Box width={"100%"}>
+      {
+        showComment ? (<><Box width={"100%"}>
         <Formik
           initialValues={{
             comment: "",
@@ -270,7 +272,8 @@ const BlogDetail = () => {
             <Divider />
           </Box>
         ))}
-      </Box>
+      </Box></>) : ("")
+      }
     </Container>
   );
 };

@@ -6,9 +6,7 @@ import { Box, Container, Typography } from "@mui/material";
 import BlogCard from "../components/BlogCard";
 
 const CategoryPage = () => {
-  const [categoryId, setCategoryId] = useState(null);
   const [categoryBlogs, setCategoryBlogs] = useState([]);
-
   const { categoryName } = useParams();
   const { blogs, categories } = useSelector((state) => state.blog);
   const { getRequest } = useBlogRequest();
@@ -18,27 +16,20 @@ const CategoryPage = () => {
     getRequest("categories");
   }, []);
 
-  //tıklandığında ilgili kategorinin id sini alıyoruz.
   useEffect(() => {
     const category = categories?.find((cate) => cate.name === categoryName);
-    setCategoryId(category?._id);
-  }, [categoryName]);
+    if (category) {
+      const categoryBlogs = blogs.filter((blog) => blog.categoryId === category._id);
+      setCategoryBlogs(categoryBlogs);
+    }
+  }, [categoryName, blogs, categories, getRequest]);
 
-  //ilgili kategoriye göre blogları filtreleme yapıyoruz
-  useEffect(() => {
-    const categoryBlogs = blogs.filter(
-      (blog) => blog.categoryId === categoryId
-    );
-    setCategoryBlogs(categoryBlogs);
-  }, [categoryId]);
-
-  console.log(categoryBlogs);
   return (
-    <Container sx={{pt:4}}>
-        <Typography variant="h5" sx={{backgroundColor:"green"}} textAlign={"center"}>{categoryName} Blogs</Typography>
-      <Box pt={4}>
+    <Container sx={{ pt: 4 }}>
+      <Typography pb={5} textAlign={'center'} variant="h6" color={"#723C45"} textTransform={'uppercase'} fontWeight={"bold"}>{categoryName} Blogs</Typography>
+      <Box display={"flex"} flexWrap={"wrap"} rowGap={2}>
         {categoryBlogs.map((blog) => (
-          <BlogCard {...blog} />
+          <BlogCard key={blog._id} {...blog} />
         ))}
       </Box>
     </Container>
