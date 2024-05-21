@@ -5,7 +5,6 @@ const initialState = {
   categories: [],
   comments: [],
   users: [],
-  currentPage: "",
   totalPages: 0,
   loading: false,
   error: false,
@@ -30,21 +29,13 @@ const blogSlice = createSlice({
       state.loading = false;
       state.comments.push(addData);
     },
-    paginationSuccess: (
-      state,
-      {
-        payload: {
-          data,
-          details: {
-            page,
-            pages: { total },
+    paginationSuccess: (state,{payload: {data,details: {pages: { total },
           },
         },
       }
     ) => {
       state.loading = false;
       state.blogs = data;
-      state.currentPage = page;
       state.totalPages = total;
     },
     putRequestSuccess: (state, { payload: { path, updateData } }) => {
