@@ -9,8 +9,8 @@ const UserProfile = () => {
   const { user } = useSelector((state) => state.auth);
   const { updateUser } = useAuthRequest();
   const { image, username, firstName, lastName, email, city, bio, _id } = user;
-console.log(user)
-console.log(editedUser)
+  // console.log(user)
+  // console.log(editedUser)
 
   const handleEdit = () => {
     setEditedUser({ username, firstName, lastName, email, city, bio });
@@ -23,6 +23,7 @@ console.log(editedUser)
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(e.target);
     setEditedUser({ ...editedUser, [name]: value });
   };
 
@@ -53,23 +54,26 @@ console.log(editedUser)
       </Box>
       {userInfo.map(({ label, value, name }) => (
         <Box sx={{ maxWidth: 500, margin: "auto", pt: 2 }} key={name}>
-          <Typography variant="span">{label}</Typography>
-          {!editMode ? (
-            <TextField
-              fullWidth
-              value={value}
-              InputProps={{
-                readOnly: true,
-              }}
-              sx={{ mt: 1 }}
-            />
-          ) : (
+          <Typography sx={{color:"#A7C0DD"}} textTransform={"uppercase"} fontWeight={"bold"}>{label}</Typography>
+          {editMode ? (
             <TextField
               fullWidth
               name={name}
               value={editedUser[name] || ""}
               onChange={handleChange}
-              sx={{ mt: 1 }}
+              sx={{ mt: 1}}
+              
+            />
+          ) : (
+            <TextField
+              fullWidth
+              value={value}
+              InputProps={{
+                readOnly: true,
+                style:{color:"gray"}
+              }}
+              sx={{ mt: 1,bgcolor: '#FFE5AE40'  }}
+             
             />
           )}
         </Box>
@@ -83,10 +87,14 @@ console.log(editedUser)
           pt: 2,
         }}
       >
-        {!editMode ? (
-          <Button onClick={handleEdit} sx={{color:"green"}}>Edit Profile</Button>
+        {editMode ? (
+          <Button onClick={handleSaveEdit} sx={{ color: "green" }}>
+            Save Edit
+          </Button>
         ) : (
-          <Button onClick={handleSaveEdit} sx={{color:"green"}}>Save Edit</Button>
+          <Button onClick={handleEdit} sx={{ color: "green" }}>
+            Edit Profile
+          </Button>
         )}
       </Box>
     </Container>
