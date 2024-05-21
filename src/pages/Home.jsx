@@ -10,7 +10,7 @@ import { Container } from "@mui/material";
 
 const Home = () => {
   const { blogs, totalPages } = useSelector((state) => state.blog);
-  const { getBlogsPage, getRequest } = useBlogRequest();
+  const { getBlogsPage } = useBlogRequest();
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleChangePage = (e, page) => {
