@@ -27,6 +27,7 @@ const Home = () => {
   return (
     <Container
       sx={{
+        minHeight:"79vh",
         py: 5,
         display: "flex",
         flexDirection: "column",

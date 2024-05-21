@@ -1,12 +1,12 @@
 import useAxios from "./useAxios";
 import { useDispatch } from "react-redux";
-import { fetchStart } from "../features/auhtSlice";
 import {
   addCommentSucess,
   addRequestSuccess,
   deleteSuccess,
   editSuccess,
-  fetchFail,
+  fetchfail,
+  fetchstart,
   getRequestSuccess,
   paginationSuccess,
   postLikeSuccess,
@@ -21,8 +21,7 @@ const useBlogRequest = () => {
   const navigate = useNavigate()
 
   const getRequest = async (path, limit = null) => {
-    dispatch(fetchStart());
-
+    dispatch(fetchstart());
     try {
       let url = `/${path}`;
       if (limit !== null) {
@@ -33,13 +32,13 @@ const useBlogRequest = () => {
       const getData = data.data;
       dispatch(getRequestSuccess({ path, getData }));
     } catch (error) {
-      dispatch(fetchFail());
+      dispatch(fetchfail());
       toastErrorNotify(`Failed to load ${path}`);
     }
   };
 
   const addComment = async (formData) => {
-    dispatch(fetchStart());
+    dispatch(fetchstart());
     try {
       const { data } = await axiosToken.post(`/comments/`, formData);
       const addData = data.data;
@@ -47,13 +46,13 @@ const useBlogRequest = () => {
       getRequest("comments",100000000)
       toastSuccessNotify("Added  successfully.");
     } catch (err) {
-      dispatch(fetchFail());
+      dispatch(fetchfail());
       toastErrorNotify("Failed to add .");
       console.log(err);
     }
   };
   const addRequest = async (path, formData) => {
-    dispatch(fetchStart());
+    dispatch(fetchstart());
     try {
       const { data } = await axiosToken.post(`/${path}/`, formData);
       const addData = data.new;
@@ -61,53 +60,52 @@ const useBlogRequest = () => {
       getRequest(path);
       toastSuccessNotify("Added  successfully.");
     } catch (err) {
-      dispatch(fetchFail());
+      dispatch(fetchfail());
       toastErrorNotify("Failed to add .");
       console.log(err);
     }
   };
 
   const putRequest = async (path, id, formData) => {
-    dispatch(fetchStart());
+    dispatch(fetchstart());
     try {
       const { data } = await axiosToken.put(`/${path}/${id}`, formData);
       const updateData = data.new;
       dispatch(putRequestSuccess({ path, updateData }));
       //   toastSuccessNotify("Update successfully.");
     } catch (err) {
-      dispatch(fetchFail());
+      dispatch(fetchfail());
       //   toastErrorNotify("Failed to update.");
       console.log(err);
     }
   };
 
   const getBlogsPage = async (page, limit) => {
-    dispatch(fetchStart());
-
+    dispatch(fetchstart());
     try {
       const { data } = await axiosToken(`/blogs?page=${page}&limit=${limit}`);
       dispatch(paginationSuccess(data));
     } catch (error) {
-      dispatch(fetchFail());
+      dispatch(fetchfail());
       toastErrorNotify(`Failed to load`);
     }
   };
 
   const postLike = async(blogId)=>{
-    dispatch(fetchStart());
+    dispatch(fetchstart());
     try {
       const { data } = await axiosToken.post(`/blogs/${blogId}/postLike`);
       dispatch(postLikeSuccess({data,blogId}));
       getRequest("blogs")
     } catch (err) {
-      dispatch(fetchFail());
+      dispatch(fetchfail());
       toastErrorNotify("Failed to add .");
       console.log(err);
     }
   }
 
   const deleteRequest = async (id) => {
-    dispatch(fetchStart());
+    dispatch(fetchstart());
     try {
       await axiosToken.delete(`/blogs/${id}`); 
       dispatch(deleteSuccess({id}))
@@ -115,14 +113,14 @@ const useBlogRequest = () => {
       navigate("/myblog")
       toastSuccessNotify("deleted successfully.");
     } catch (error) {
-      dispatch(fetchFail());
+      dispatch(fetchfail());
       toastErrorNotify("Failed to delete.");
       console.log(error);
     }
   }
 
   const editRequest = async (id,formData) => {
-    dispatch(fetchStart())
+    dispatch(fetchstart())
     try{
       const {data} = await axiosToken.put(`/blogs/${id}`,formData)
       const updateData = data.new
@@ -130,7 +128,7 @@ const useBlogRequest = () => {
       getRequest("blogs")
       toastSuccessNotify("Update successfully.");
     }catch(err){
-      dispatch(fetchFail())
+      dispatch(fetchfail())
       toastErrorNotify("Failed to update.");
       console.log(err)
     }

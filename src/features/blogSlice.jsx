@@ -14,8 +14,9 @@ const blogSlice = createSlice({
   name: "blog",
   initialState,
   reducers: {
-    fetchStart: (state) => {
-      state.loading = true;
+    fetchstart: (state) => {
+      state.loading = true
+      console.log("loadingtrue oldu")
     },
     getRequestSuccess: (state, { payload: { path, getData } }) => {
       state.loading = false;
@@ -80,7 +81,7 @@ const blogSlice = createSlice({
         return item;
       });
     },
-    fetchFail: (state) => {
+    fetchfail: (state) => {
       state.loading = false;
       state.error = true;
     },
@@ -88,7 +89,7 @@ const blogSlice = createSlice({
 });
 
 export const {
-  fetchStart,
+  fetchstart,
   getRequestSuccess,
   addRequestSuccess,
   paginationSuccess,
@@ -97,7 +98,7 @@ export const {
   postLikeSuccess,
   deleteSuccess,
   editSuccess,
-  fetchFail,
+  fetchfail,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;
