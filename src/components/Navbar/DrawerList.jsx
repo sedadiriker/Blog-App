@@ -9,7 +9,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import StarIcon from "@mui/icons-material/Star";
 import CategoryIcon from "@mui/icons-material/Category";
-import { Box, Menu, MenuItem } from "@mui/material";
+import { Box, Menu } from "@mui/material";
 import { useEffect, useState } from "react";
 import useBlogRequest from "../../hooks/useBlogRequest";
 import { useSelector } from "react-redux";
@@ -79,6 +79,11 @@ const DrawerList = ({ toggleDrawer }) => {
                   MenuListProps={{
                     "aria-labelledby": "basic-button",
                   }}
+                  sx={{
+                    '& .MuiPaper-root': {
+                      backgroundColor: '#7597A3',
+                    },
+                  }}
                 >
                   {categories?.map((category) => (
                     <Link
@@ -93,6 +98,10 @@ const DrawerList = ({ toggleDrawer }) => {
                         onClick={() => {
                           handleClose();
                           toggleDrawer(false);
+                        }}
+                        sx={{
+                          color: "#E4D7CE",
+                          ":hover": { backgroundColor: "#9FA2A7", color: "black" },
                         }}
                       >
                         {category.name}
