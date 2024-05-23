@@ -13,6 +13,8 @@ import LatestBlogs from "../pages/LatestBlogs";
 import MyBlog from "../pages/User/MyBlog";
 import BlogDetail from "../pages/BlogDetail";
 import Footer from "../components/Footer";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
 
 const AppRouter = () => {
   return (
@@ -31,6 +33,8 @@ const AppRouter = () => {
             <Route path="latestblogs" element={<LatestBlogs />} />
             <Route path="myblog" element={<MyBlog />} />
             <Route path="blogdetail/:id" element={<BlogDetail />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
             <Route
               path="/categories/:categoryName"
               element={<CategoryPage />}

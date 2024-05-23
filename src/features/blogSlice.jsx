@@ -9,26 +9,20 @@ const initialState = {
   loading: false,
   error: false,
 };
-
 const blogSlice = createSlice({
   name: "blog",
   initialState,
   reducers: {
     fetchstart: (state) => {
       state.loading = true
-      console.log("loadingtrue oldu")
     },
     getRequestSuccess: (state, { payload: { path, getData } }) => {
       state.loading = false;
       state[path] = getData;
     },
-    addRequestSuccess: (state, { payload: { addData } }) => {
+    addRequestSuccess: (state, { payload: {path, addData } }) => {
+      state[path] = [addData, ...state[path]];
       state.loading = false;
-      state.comments.push(addData);
-    },
-    addCommentSucess: (state, { addData }) => {
-      state.loading = false;
-      state.comments.push(addData);
     },
     paginationSuccess: (state,{payload: {data,details: {pages: { total },
           },

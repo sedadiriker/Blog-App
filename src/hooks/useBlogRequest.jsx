@@ -16,7 +16,7 @@ import { toastSuccessNotify, toastErrorNotify } from "../helper/ToastNotify";
 import { useNavigate } from "react-router-dom";
 
 const useBlogRequest = () => {
-  const { axiosBase, axiosToken } = useAxios();
+  const { axiosToken } = useAxios();
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
@@ -37,27 +37,17 @@ const useBlogRequest = () => {
     }
   };
 
-  const addComment = async (formData) => {
-    dispatch(fetchstart());
-    try {
-      const { data } = await axiosToken.post(`/comments/`, formData);
-      const addData = data.data;
-      dispatch(addCommentSucess({ addData }));
-      getRequest("comments",100000000)
-      toastSuccessNotify("Added  successfully.");
-    } catch (err) {
-      dispatch(fetchfail());
-      toastErrorNotify("Failed to add .");
-      console.log(err);
-    }
-  };
   const addRequest = async (path, formData) => {
     dispatch(fetchstart());
     try {
       const { data } = await axiosToken.post(`/${path}/`, formData);
-      const addData = data.new;
+      const addData = data.data;
       dispatch(addRequestSuccess({ path, addData }));
-      getRequest(path);
+      if(path === "comments") {
+        getRequest("comments",10000000);
+      }else{
+        getRequest(path)
+      }
       toastSuccessNotify("Added  successfully.");
     } catch (err) {
       dispatch(fetchfail());
@@ -134,7 +124,7 @@ const useBlogRequest = () => {
     }
   }
 
-  return { getRequest, addRequest, getBlogsPage, putRequest, addComment,postLike,deleteRequest,editRequest };
+  return { getRequest, addRequest, getBlogsPage, putRequest,postLike,deleteRequest,editRequest };
 };
 
 export default useBlogRequest;

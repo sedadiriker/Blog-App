@@ -14,10 +14,10 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ShareBlog from "./ShareBlog";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useBlogRequest from "../hooks/useBlogRequest";
 import { useSelector } from "react-redux";
+import IconButtons from "./IconButtons";
 
 export default function BlogCard({
   title,
@@ -31,7 +31,6 @@ export default function BlogCard({
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  const { postLike } = useBlogRequest();
   const { loading } = useSelector((state) => state.blog);
 
   const handleClick = (e) => {
@@ -157,53 +156,41 @@ export default function BlogCard({
       >
         {loading ? (
           <>
-          <Skeleton
-            animation="wave"
-            height={10}
-            width="30%"
-            style={{ marginBottom: 6 }}
-          />
-          <Skeleton
-            animation="wave"
-            height={40}
-            width="20%"
-            style={{ marginBottom: 6 }}
-          />
+            <Skeleton
+              animation="wave"
+              height={10}
+              width="30%"
+              style={{ marginBottom: 6 }}
+            />
+            <Skeleton
+              animation="wave"
+              height={40}
+              width="20%"
+              style={{ marginBottom: 6 }}
+            />
           </>
         ) : (
           <>
-          <Box>
-            <IconButton
-              aria-label="add to favorites"
-              sx={{ fontSize: "1rem" }}
-              onClick={() => postLike(_id)}
-            >
-              {likes.length} <FavoriteIcon sx={{ color: "#A73159" }} />
-            </IconButton>
-            <IconButton
-              aria-label="comment"
-              sx={{ fontSize: "1rem" }}
+            <Box>
+              <IconButtons
+                id={_id}
+                likes={likes}
+                countOfVisitors={countOfVisitors}
+                comments={comments}
+              />
+            </Box>
+            <Button
+              sx={{
+                color: "#344A58",
+                backgroundColor: "#E4D8BA",
+                ":hover": { backgroundColor: "#76815B", color: "white" },
+              }}
               onClick={() => navigate(`/blogdetail/${_id}`)}
             >
-              {comments.length} <InsertCommentIcon sx={{ color: "#C96F1F" }} />
-            </IconButton>
-            <IconButton aria-label="follow" sx={{ fontSize: "1rem" }}>
-              {countOfVisitors} <VisibilityIcon sx={{ color: "#385E40" }} />
-            </IconButton>
-          </Box>
-          <Button
-          sx={{
-            color: "#344A58",
-            backgroundColor: "#E4D8BA",
-            ":hover": { backgroundColor: "#76815B", color: "white" },
-          }}
-          onClick={() => navigate(`/blogdetail/${_id}`)}
-        >
-          Read More
-        </Button>
-        </>
+              Read More
+            </Button>
+          </>
         )}
-        
       </CardActions>
     </Card>
   );

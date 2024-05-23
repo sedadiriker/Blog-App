@@ -1,9 +1,10 @@
+import { Box } from "@mui/material"
 
 const About = () => {
   return (
-    <div>
+    <Box minHeight={"79vh"}>
       
-    </div>
+    </Box>
   )
 }
 

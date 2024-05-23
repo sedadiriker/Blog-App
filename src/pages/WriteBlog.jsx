@@ -43,7 +43,6 @@ const WriteBlog = () => {
         color={"#723C45"}
         textTransform={"uppercase"}
         fontWeight={"bold"}
-        pb={3}
         sx={{
           bgcolor: "#FFE2A880",
           borderTopRightRadius: "10px",
@@ -51,6 +50,7 @@ const WriteBlog = () => {
           width: { xs: "75vw", md: "50vw" },
           m: "auto",
           py: 1,
+          mb:1,
           letterSpacing: ".3rem",
         }}
       >
@@ -103,7 +103,7 @@ const WriteBlog = () => {
                     py: "3rem",
                     px: "1.5rem",
                     borderRadius: "10px",
-                    width: { xs: "100%", md: "70vw" },
+                    width: { xs: "90vw", md: "70vw" },
                   }}
                 >
                   <TextField
