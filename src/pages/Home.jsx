@@ -21,9 +21,6 @@ const Home = () => {
     getBlogsPage(currentPage, 8);
   }, [currentPage]);
 
-  // useEffect(() => {
-  //   getRequest("blogs");
-  // }, []);
   return (
     <Container
       sx={{
@@ -44,11 +41,25 @@ const Home = () => {
 
       {/* PAGİNATİON */}
       <Stack spacing={2}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={handleChangePage}
-        />
+      <Pagination
+      count={totalPages}
+      page={currentPage}
+      onChange={handleChangePage}
+      sx={{
+        '& .MuiPaginationItem-root': {
+          '&.Mui-selected': {
+            backgroundColor: '#006300',
+            color: 'white',
+            '&:hover': {
+              backgroundColor: '#00630070',
+            },
+          },
+          '&:hover': {
+            backgroundColor: '#00630050',
+          },
+        },
+      }}
+    />
       </Stack>
     </Container>
   );
