@@ -4,12 +4,13 @@ import { useSelector } from "react-redux";
 import useBlogRequest from "../../hooks/useBlogRequest";
 import BlogCard from "../../components/BlogCard";
 import { useNavigate } from "react-router-dom";
+import { GreenBtn } from "../../styles/globalStyles";
 
 const MyBlog = () => {
   const { user } = useSelector((state) => state.auth);
   const { blogs } = useSelector((state) => state.blog);
   const { getRequest } = useBlogRequest();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const myBlogs = blogs.filter((blog) => blog.userId === user._id);
   // console.log(myBlogs)
@@ -25,16 +26,28 @@ const MyBlog = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent:"center",
+        justifyContent: "center",
         gap: 3,
       }}
     >
       {" "}
-      <Box display={"flex"} flexWrap={"wrap"} rowGap={2} >
+      <Box display={"flex"} flexWrap={"wrap"} rowGap={2}>
         {myBlogs.length > 0 ? (
           myBlogs.map((blog) => <BlogCard key={blog._id} {...blog} />)
         ) : (
-          <Typography textAlign={"center"} sx={{fontSize:{xs:"12px", md:"1rem"}}}>You haven't added any blogs yet. <br/> Click the <Button sx={{color:"green"}} onClick={()=>navigate("/writeblog")}>Add New Blog</Button> button to add your first blog.</Typography>
+          <Typography
+            textAlign={"center"}
+            sx={{ fontSize: { xs: "12px", md: "1rem" } }}
+          >
+            You haven't added any blogs yet. <br /> Click the{" "}
+            <Button
+              sx={GreenBtn}
+              onClick={() => navigate("/writeblog")}
+            >
+              Add New Blog
+            </Button>
+            button to add your first blog.
+          </Typography>
         )}
       </Box>
     </Container>

@@ -1,6 +1,9 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { Slide } from "react-toastify";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import WarningIcon from '@mui/icons-material/Warning';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 export const toastWarnNotify = (msg) => {
   toast.warn(msg, {
     autoClose: 1000,
@@ -9,6 +12,13 @@ export const toastWarnNotify = (msg) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
+    style: { backgroundColor: "#CE987F70", color: "black" },
+    icon: <WarningIcon sx={{color:"brown"}} />,
+    position: "bottom-right",
+    transition: Slide,
+    progressStyle: {
+      background: "brown" 
+    }
   });
 };
 
@@ -20,7 +30,13 @@ export const toastSuccessNotify = (msg) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    position:"bottom-right"
+    style: { backgroundColor: "#CE987F70", color: "black" },
+    icon: <CheckCircleOutlineIcon sx={{color:"green"}} />,
+    position: "bottom-right",
+    transition: Slide,
+    progressStyle: {
+      background: "green" 
+    }
   });
 };
 
@@ -32,5 +48,12 @@ export const toastErrorNotify = (msg) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
+    style: { backgroundColor: "#CE987F70", color: "black" },
+    icon: <ErrorOutlineIcon sx={{color:"red"}} />,
+    position: "bottom-right",
+    transition: Slide,
+    progressStyle: {
+      background: "red" 
+    }
   });
 };

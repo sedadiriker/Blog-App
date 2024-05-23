@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import useBlogRequest from "../hooks/useBlogRequest";
 import SwipeableViews from "react-swipeable-views";
 import BlogCard from "./BlogCard";
+import { GreenBtn } from "../styles/globalStyles";
 
 const MostCommentedBlogs = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -53,14 +54,14 @@ const MostCommentedBlogs = () => {
         <Button
           disabled={activeStep === 0}
           onClick={() => handleStepChange(activeStep - 1)}
-          sx={{ color: "green" }}
+          sx={GreenBtn}
         >
           Back
         </Button>
         <Button
           disabled={activeStep >= mostCommentedBlogs.length - 4}
           onClick={() => handleStepChange(activeStep + 1)}
-          sx={{ color: "green" }}
+          sx={GreenBtn}
         >
           Next
         </Button>

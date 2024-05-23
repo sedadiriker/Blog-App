@@ -5,3 +5,10 @@ export const BoxContainer = {
   minHeight: "79vh",
   py: 2,
 };
+
+export const GreenBtn = {
+  color: "green",
+  "&:hover": {
+    backgroundColor: "#FFF0D4"
+  }
+};
