@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useBlogRequest from "../hooks/useBlogRequest";
-import { Box, Container, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import BlogCard from "../components/BlogCard";
 import PageName from "../components/PageName";
+import { BoxContainer } from "../styles/globalStyles";
 
 const CategoryPage = () => {
   const [categoryBlogs, setCategoryBlogs] = useState([]);
@@ -28,17 +29,10 @@ const CategoryPage = () => {
   }, [categoryName]);
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      minHeight={"79vh"}
-      py={2}
-      px={15}
-    >
-      <PageName title={`${categoryName} Blogs`}/>
+    <Box sx={BoxContainer} px={15}>
+      <PageName title={`${categoryName} Blogs`} />
       {/* BLOG CARD */}
-      <Box display={"flex"} flexWrap={"wrap"} gap={2} pt={1} >
+      <Box display={"flex"} flexWrap={"wrap"} gap={2} pt={1}>
         {categoryBlogs.map((blog) => (
           <BlogCard key={blog._id} {...blog} />
         ))}

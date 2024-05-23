@@ -8,7 +8,6 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect } from "react";
@@ -16,6 +15,7 @@ import { object, string } from "yup";
 import useBlogRequest from "../hooks/useBlogRequest";
 import { useSelector } from "react-redux";
 import PageName from "../components/PageName";
+import { BoxContainer } from "../styles/globalStyles";
 
 const WriteBlog = () => {
   const { getRequest, addRequest } = useBlogRequest();
@@ -28,18 +28,10 @@ const WriteBlog = () => {
 
   useEffect(() => {
     getRequest("categories");
-  });
+  },[]);
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"column"}
-      alignItems={"center"}
-      py={2}
-      minHeight={"79vh"}
-    >
-      {" "}
-      <PageName title={"Write a blog"}/>
-
+    <Box sx={BoxContainer}>
+      <PageName title={"Write a blog"} />
       {/* BLOG FORM */}
       <Box
         sx={{
@@ -47,7 +39,7 @@ const WriteBlog = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "start",
-          pt:1
+          pt: 1,
         }}
       >
         <Container

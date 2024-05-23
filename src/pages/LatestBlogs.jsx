@@ -5,6 +5,7 @@ import useBlogRequest from "../hooks/useBlogRequest";
 import { useNavigate } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
 import PageName from "../components/PageName";
+import { BoxContainer } from "../styles/globalStyles";
 
 const LatestBlogs = () => {
   const { blogs, loading } = useSelector((state) => state.blog);
@@ -22,14 +23,8 @@ const LatestBlogs = () => {
       <LinearProgress sx={{ bgcolor: "#5B92A8" }} />
     </Box>
   ) : (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      minHeight={"79vh"}
-      py={2}
-    >
-      <PageName title={"Latest Blogs"}/>
+    <Box sx={BoxContainer}>
+      <PageName title={"Latest Blogs"} />
 
       {/* BLOG CARD */}
       <Box py={5} sx={{ px: { xs: 5, md: 10 } }}>
