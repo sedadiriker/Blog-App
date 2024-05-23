@@ -6,27 +6,25 @@ import useBlogRequest from "../hooks/useBlogRequest";
 import SwipeableViews from "react-swipeable-views";
 import BlogCard from "./BlogCard";
 
-
 const MostCommentedBlogs = () => {
-    const {blogs} = useSelector(state => state.blog)
-    const{getRequest}=useBlogRequest()
-  
-    const mostCommentedBlogs = blogs
-    .slice()
-    .sort((a,b) => b.comments.length - a.comments.length)
-    .slice(0,8)
+  const [activeStep, setActiveStep] = useState(0);
+  const { blogs } = useSelector((state) => state.blog);
+  const { getRequest } = useBlogRequest();
+  const theme = useTheme(); //!bileşen temasına erişim sağlama
 
-  console.log("most",mostCommentedBlogs)
-   
-    const theme = useTheme(); //!bileşen temasına erişim sağlama
-    const [activeStep, setActiveStep] = useState(0);
-  
-    const handleStepChange = (step) => {
-      setActiveStep(step);
-    };
-    useEffect(()=>{
-        getRequest("blogs")
-      },[])
+  const mostCommentedBlogs = blogs
+    .slice()
+    .sort((a, b) => b.comments.length - a.comments.length)
+    .slice(0, 8);
+
+  // console.log("most",mostCommentedBlogs)
+
+  const handleStepChange = (step) => {
+    setActiveStep(step);
+  };
+  useEffect(() => {
+    getRequest("blogs");
+  }, []);
   return (
     <Box sx={{ maxWidth: 1200, margin: "auto" }}>
       <SwipeableViews
@@ -35,15 +33,14 @@ const MostCommentedBlogs = () => {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {mostCommentedBlogs.map((post, index) => (
+        {mostCommentedBlogs.map((blog, index) => (
           <Box key={index}>
-            {Math.abs(activeStep - index) <= 4 ? ( //abs mutlak değeri döndürür!!
+            {Math.abs(activeStep - index) <= 0 ? ( //abs mutlak değeri döndürür!!
               <Grid container spacing={2}>
                 {mostCommentedBlogs.slice(index, index + 2).map((blog, i) => (
                   <Grid key={i} item xs={12} md={6}>
-                   
                     <Box p={2}>
-                      <BlogCard {...blog}/>
+                      <BlogCard {...blog} />
                     </Box>
                   </Grid>
                 ))}
@@ -52,24 +49,24 @@ const MostCommentedBlogs = () => {
           </Box>
         ))}
       </SwipeableViews>
-    <Box display={"flex"} justifyContent={"center"}>
-    <Button
-        disabled={activeStep === 0}
-        onClick={() => handleStepChange(activeStep - 1)}
-        sx={{color:"green"}}
-      >
-        Back
-      </Button>
-      <Button
-        disabled={activeStep >= mostCommentedBlogs.length - 4}
-        onClick={() => handleStepChange(activeStep + 1)}
-        sx={{color:"green"}}
-      >
-        Next
-      </Button>
+      <Box display={"flex"} justifyContent={"center"}>
+        <Button
+          disabled={activeStep === 0}
+          onClick={() => handleStepChange(activeStep - 1)}
+          sx={{ color: "green" }}
+        >
+          Back
+        </Button>
+        <Button
+          disabled={activeStep >= mostCommentedBlogs.length - 4}
+          onClick={() => handleStepChange(activeStep + 1)}
+          sx={{ color: "green" }}
+        >
+          Next
+        </Button>
+      </Box>
     </Box>
-    </Box>
-  )
-}
+  );
+};
 
-export default MostCommentedBlogs
+export default MostCommentedBlogs;

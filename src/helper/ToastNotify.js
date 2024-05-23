@@ -20,6 +20,7 @@ export const toastSuccessNotify = (msg) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
+    position:"bottom-right"
   });
 };
 
