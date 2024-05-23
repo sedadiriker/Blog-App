@@ -15,6 +15,7 @@ import React, { useEffect } from "react";
 import { object, string } from "yup";
 import useBlogRequest from "../hooks/useBlogRequest";
 import { useSelector } from "react-redux";
+import PageName from "../components/PageName";
 
 const WriteBlog = () => {
   const { getRequest, addRequest } = useBlogRequest();
@@ -37,25 +38,9 @@ const WriteBlog = () => {
       minHeight={"79vh"}
     >
       {" "}
-      <Typography
-        textAlign={"center"}
-        variant="h6"
-        color={"#723C45"}
-        textTransform={"uppercase"}
-        fontWeight={"bold"}
-        sx={{
-          bgcolor: "#FFE2A880",
-          borderTopRightRadius: "10px",
-          borderBottomLeftRadius: "10px",
-          width: { xs: "75vw", md: "50vw" },
-          m: "auto",
-          py: 1,
-          mb:1,
-          letterSpacing: ".3rem",
-        }}
-      >
-        Write A blog
-      </Typography>
+      <PageName title={"Write a blog"}/>
+
+      {/* BLOG FORM */}
       <Box
         sx={{
           position: "relative",

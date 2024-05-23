@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import useBlogRequest from "../hooks/useBlogRequest";
 import { useNavigate } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
+import PageName from "../components/PageName";
 
 const LatestBlogs = () => {
   const { blogs, loading } = useSelector((state) => state.blog);
@@ -28,23 +29,9 @@ const LatestBlogs = () => {
       minHeight={"79vh"}
       py={2}
     >
-      <Typography
-        textAlign={"center"}
-        variant="h6"
-        color={"brown"}
-        textTransform={"uppercase"}
-        fontWeight={"bold"}
-        sx={{
-          bgcolor: "#FFE2A880",
-          borderTopRightRadius: "10px",
-          borderBottomLeftRadius: "10px",
-          width: { xs: "75vw", md: "50vw" },
-          py: 1,
-          letterSpacing: ".3rem",
-        }}
-      >
-        Latest Blogs
-      </Typography>
+      <PageName title={"Latest Blogs"}/>
+
+      {/* BLOG CARD */}
       <Box py={5} sx={{ px: { xs: 5, md: 10 } }}>
         <Grid container spacing={5}>
           {latestBlogs.map((blog, index) => (

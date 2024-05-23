@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import useBlogRequest from "../hooks/useBlogRequest";
 import { Box, Container, Typography } from "@mui/material";
 import BlogCard from "../components/BlogCard";
+import PageName from "../components/PageName";
 
 const CategoryPage = () => {
   const [categoryBlogs, setCategoryBlogs] = useState([]);
@@ -35,27 +36,9 @@ const CategoryPage = () => {
       py={2}
       px={15}
     >
-      {" "}
-      <Typography
-        pb={5}
-        textAlign={"center"}
-        variant="h6"
-        color={"#723C45"}
-        textTransform={"uppercase"}
-        fontWeight={"bold"}
-        sx={{
-          bgcolor: "#FFE2A880",
-          borderTopRightRadius: "10px",
-          borderBottomLeftRadius: "10px",
-          width: { xs: "75vw", md: "50vw" },
-          py: 1,
-          mb:1,
-          letterSpacing: ".3rem",
-        }}
-      >
-        {categoryName} Blogs
-      </Typography>
-      <Box display={"flex"} flexWrap={"wrap"} gap={2} >
+      <PageName title={`${categoryName} Blogs`}/>
+      {/* BLOG CARD */}
+      <Box display={"flex"} flexWrap={"wrap"} gap={2} pt={1} >
         {categoryBlogs.map((blog) => (
           <BlogCard key={blog._id} {...blog} />
         ))}

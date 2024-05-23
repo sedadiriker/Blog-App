@@ -35,11 +35,14 @@ const Home = () => {
         gap: 3,
       }}
     >
+      {/* BLOG CARD */}
       <Box display={"flex"} flexWrap={"wrap"} rowGap={2}>
         {blogs?.map((blog) => (
           <BlogCard key={blog._id} {...blog} />
         ))}
       </Box>
+
+      {/* PAGİNATİON */}
       <Stack spacing={2}>
         <Pagination
           count={totalPages}
