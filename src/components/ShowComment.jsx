@@ -1,32 +1,38 @@
-import { Avatar, Box, Button, Divider, TextField, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import useBlogRequest from "../hooks/useBlogRequest";
 
 const ShowComment = ({ id }) => {
-
   const { getRequest, addRequest } = useBlogRequest();
   const { comments } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
-
 
   const selectComments = comments.filter((comment) => comment?.blogId === id);
 
   useEffect(() => {
     getRequest("comments", 1000000);
   }, []);
-  console.log("select",selectComments)
-  console.log("comments",comments)
+  // console.log("select",selectComments)
+  // console.log("comments",comments)
   return (
     <>
+      {/* COMMENT FORM */}
       <Box width={"100%"}>
         <Formik
           initialValues={{
             comment: "",
           }}
           onSubmit={(values, actions) => {
-            addRequest("comments",{
+            addRequest("comments", {
               blogId: id,
               comment: values.comment,
               userId: user,
@@ -110,6 +116,8 @@ const ShowComment = ({ id }) => {
           )}
         </Formik>
       </Box>
+
+      {/* COMMENTS */}
       <Box width={"100%"} pt={4}>
         {selectComments.map(({ _id, userId, createdAt, comment }) => (
           <Box key={_id} pb={2}>

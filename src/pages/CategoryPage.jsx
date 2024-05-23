@@ -24,7 +24,7 @@ const CategoryPage = () => {
       );
       setCategoryBlogs(categoryBlogs);
     }
-  }, [categoryName, blogs, categories, getRequest]);
+  }, [categoryName]);
 
   return (
     <Box
