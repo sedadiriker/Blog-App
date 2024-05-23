@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Modal, Typography } from "@mui/material";
 
-const ConfirmModal = ({ open, onClose, confirm, message }) => {
+const DeleteBlogModal = ({ open, onClose, confirm, message }) => {
   return (
     <Modal
       open={open}
@@ -36,4 +36,4 @@ const ConfirmModal = ({ open, onClose, confirm, message }) => {
   );
 };
 
-export default ConfirmModal;
+export default DeleteBlogModal;

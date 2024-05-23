@@ -3,20 +3,16 @@ import {
   Box,
   Button,
   Container,
-  IconButton,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useBlogRequest from "../hooks/useBlogRequest";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import InsertCommentIcon from "@mui/icons-material/InsertComment";
-import ConfirmModal from "../components/ConfirmModal";
-import EditBlogModal from "../components/EditBlogModal";
+import EditBlogModal from "../components/Modals/EditBlogModal";
 import ShowComment from "../components/ShowComment";
 import IconButtons from "../components/IconButtons";
+import DeleteBlogModal from "../components/Modals/DeleteBlogModal";
 
 const BlogDetail = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -70,8 +66,6 @@ const BlogDetail = () => {
     setWriter(writerUser);
   }, []);
 
-  //  console.log("select",selectComments)
-  //  console.log("comments",comments)
   return (
     <Container
       sx={{
@@ -82,7 +76,7 @@ const BlogDetail = () => {
         gap: { xs: 1, md: 2 },
       }}
     >
-      {" "}
+      {/* BLOG TİTLE */}
       <Typography
         variant="h6"
         textAlign={"center"}
@@ -92,6 +86,8 @@ const BlogDetail = () => {
       >
         {selectedBlog?.title}
       </Typography>
+
+      {/* BLOG İMAGE */}
       <Box
         sx={{ width: { xs: "80vw", md: "50vw" }, height: { xs: 200, md: 400 } }}
       >
@@ -101,6 +97,8 @@ const BlogDetail = () => {
           style={{ width: "100%", height: "100%", objectFit: "contain" }}
         />
       </Box>
+
+      {/* BLOG WRİTER  */}
       <Box
         display={"flex"}
         alignItems={"center"}
@@ -135,6 +133,8 @@ const BlogDetail = () => {
           </Typography>
         </Box>
       </Box>
+
+      {/* CONTENT */}
       <Typography textAlign="justify">
         <span
           style={{
@@ -151,6 +151,8 @@ const BlogDetail = () => {
         </span>
         {selectedBlog?.content.slice(1)}
       </Typography>
+
+      {/* ICONS */}
       <Box justifySelf="flex-start" sx={{ width: "100%" }}>
         <IconButtons
           id={id}
@@ -161,6 +163,8 @@ const BlogDetail = () => {
           comments={selectedBlog?.comments}
         />
       </Box>
+
+      {/* COMMENTS */}
       {showComment ? (
         <>
           <ShowComment id={id} />
@@ -180,7 +184,9 @@ const BlogDetail = () => {
       ) : (
         ""
       )}
-      <ConfirmModal
+      
+      {/* MODALS */}
+      <DeleteBlogModal
         open={showDeleteModal}
         onClose={handleCloseDeleteModal}
         confirm={handleConfirmDelete}
