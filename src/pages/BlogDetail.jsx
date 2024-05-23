@@ -12,7 +12,7 @@ import useBlogRequest from "../hooks/useBlogRequest";
 import EditBlogModal from "../components/Modals/EditBlogModal";
 import ShowComment from "../components/ShowComment";
 import IconButtons from "../components/IconButtons";
-import DeleteBlogModal from "../components/Modals/DeleteBlogModal";
+import DeleteModal from "../components/Modals/DeleteModal";
 
 const BlogDetail = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -45,7 +45,7 @@ const BlogDetail = () => {
   // console.log(selectedBlog);
 
   const handleConfirmDelete = () => {
-    deleteRequest(selectedBlog?._id);
+    deleteRequest("blogs",selectedBlog?._id);
     setShowComment(false);
   };
 
@@ -186,7 +186,7 @@ const BlogDetail = () => {
       )}
       
       {/* MODALS */}
-      <DeleteBlogModal
+      <DeleteModal
         open={showDeleteModal}
         onClose={handleCloseDeleteModal}
         confirm={handleConfirmDelete}

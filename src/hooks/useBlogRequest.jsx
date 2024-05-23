@@ -1,7 +1,6 @@
 import useAxios from "./useAxios";
 import { useDispatch } from "react-redux";
 import {
-  addCommentSucess,
   addRequestSuccess,
   deleteSuccess,
   editSuccess,
@@ -18,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const useBlogRequest = () => {
   const { axiosToken } = useAxios();
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const getRequest = async (path, limit = null) => {
     dispatch(fetchstart());
@@ -27,7 +26,6 @@ const useBlogRequest = () => {
       if (limit !== null) {
         url += `?limit=${limit}`;
       }
-
       const { data } = await axiosToken(url);
       const getData = data.data;
       dispatch(getRequestSuccess({ path, getData }));
@@ -43,10 +41,10 @@ const useBlogRequest = () => {
       const { data } = await axiosToken.post(`/${path}/`, formData);
       const addData = data.data;
       dispatch(addRequestSuccess({ path, addData }));
-      if(path === "comments") {
-        getRequest("comments",10000000);
-      }else{
-        getRequest(path)
+      if (path === "comments") {
+        getRequest("comments", 10000000);
+      } else {
+        getRequest(path);
       }
       toastSuccessNotify("Added  successfully.");
     } catch (err) {
@@ -81,50 +79,64 @@ const useBlogRequest = () => {
     }
   };
 
-  const postLike = async(blogId)=>{
+  const postLike = async (blogId) => {
     dispatch(fetchstart());
     try {
       const { data } = await axiosToken.post(`/blogs/${blogId}/postLike`);
-      dispatch(postLikeSuccess({data,blogId}));
-      getRequest("blogs")
+      dispatch(postLikeSuccess({ data, blogId }));
+      getRequest("blogs");
     } catch (err) {
       dispatch(fetchfail());
       toastErrorNotify("Failed to add .");
       console.log(err);
     }
-  }
+  };
 
-  const deleteRequest = async (id) => {
+  const deleteRequest = async (path,id) => {
     dispatch(fetchstart());
     try {
-      await axiosToken.delete(`/blogs/${id}`); 
-      dispatch(deleteSuccess({id}))
-      getRequest("blogs");
-      navigate("/myblog")
+      await axiosToken.delete(`/${path}/${id}`);
+      dispatch(deleteSuccess({path, id }));
+      if(path === "comments"){
+        getRequest("comments",1099990464565);
+      }else{
+        getRequest(path);
+      }
+      if(path === "blogs"){
+        navigate("/myblog")
+      };
       toastSuccessNotify("deleted successfully.");
     } catch (error) {
       dispatch(fetchfail());
       toastErrorNotify("Failed to delete.");
       console.log(error);
     }
-  }
+  };
 
-  const editRequest = async (id,formData) => {
-    dispatch(fetchstart())
-    try{
-      const {data} = await axiosToken.put(`/blogs/${id}`,formData)
-      const updateData = data.new
-      dispatch(editSuccess({updateData}))
-      getRequest("blogs")
+  const editRequest = async (id, formData) => {
+    dispatch(fetchstart());
+    try {
+      const { data } = await axiosToken.put(`/blogs/${id}`, formData);
+      const updateData = data.new;
+      dispatch(editSuccess({ updateData }));
+      getRequest("blogs");
       toastSuccessNotify("Update successfully.");
-    }catch(err){
-      dispatch(fetchfail())
+    } catch (err) {
+      dispatch(fetchfail());
       toastErrorNotify("Failed to update.");
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
-  return { getRequest, addRequest, getBlogsPage, putRequest,postLike,deleteRequest,editRequest };
+  return {
+    getRequest,
+    addRequest,
+    getBlogsPage,
+    putRequest,
+    postLike,
+    deleteRequest,
+    editRequest,
+  };
 };
 
 export default useBlogRequest;

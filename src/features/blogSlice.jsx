@@ -21,8 +21,8 @@ const blogSlice = createSlice({
       state[path] = getData;
     },
     addRequestSuccess: (state, { payload: {path, addData } }) => {
-      state[path] = [addData, ...state[path]];
       state.loading = false;
+      state[path].unshift(addData);
     },
     paginationSuccess: (state,{payload: {data,details: {pages: { total },
           },
@@ -62,9 +62,9 @@ const blogSlice = createSlice({
         return blog;
       });
     },
-    deleteSuccess: (state, { payload: { id } }) => {
+    deleteSuccess: (state, { payload: {path, id } }) => {
       state.loading = false;
-      state.blogs = state.blogs.filter((item) => item._id === id);
+      state[path] = state[path].filter((item) => item._id === id);
     },
     editSuccess: (state, { payload: { updateData } }) => {
       state.loading = false;

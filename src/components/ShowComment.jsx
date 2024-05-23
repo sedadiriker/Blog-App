@@ -7,22 +7,37 @@ import {
   Typography,
 } from "@mui/material";
 import { Form, Formik } from "formik";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogRequest from "../hooks/useBlogRequest";
+import ClearIcon from "@mui/icons-material/Clear";
+import DeleteModal from "./Modals/DeleteModal";
 
 const ShowComment = ({ id }) => {
-  const { getRequest, addRequest } = useBlogRequest();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { getRequest, addRequest,deleteRequest } = useBlogRequest();
+  const[selectedComment,setSelectedComment] = useState(null)
   const { comments } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
 
   const selectComments = comments.filter((comment) => comment?.blogId === id);
 
+  const handleDelete = () => {
+    setShowDeleteModal(true);
+  };
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+  const handleConfirmDelete = () => {
+    deleteRequest("comments",selectedComment);
+    setShowDeleteModal(false)
+  };
+console.log(selectedComment)
   useEffect(() => {
     getRequest("comments", 1000000);
   }, []);
-  // console.log("select",selectComments)
-  // console.log("comments",comments)
+  console.log("select", selectComments);
+  console.log("comments", comments);
   return (
     <>
       {/* COMMENT FORM */}
@@ -120,44 +135,69 @@ const ShowComment = ({ id }) => {
       {/* COMMENTS */}
       <Box width={"100%"} pt={4}>
         {selectComments.map(({ _id, userId, createdAt, comment }) => (
-          <Box key={_id} pb={2}>
-            <Box
-              display={"flex"}
-              alignItems={"flex-start"}
-              pl={7}
-              gap={3}
-              py={1}
-            >
-              <Avatar
-                alt={userId.username}
-                src=""
-                sx={{ backgroundColor: "#C96F1F70", color: "#5B92A8" }}
-              />
-              <Box>
-                <Typography
-                  fontWeight={"bold"}
-                  textTransform={"uppercase"}
-                  color="#5B92A8"
-                >
-                  {userId.username}
-                </Typography>
+          <Box display={"flex"} key={_id}>
+            <Box pb={2} width={"100%"}>
+              <Box
+                display={"flex"}
+                alignItems={"flex-start"}
+                pl={7}
+                gap={3}
+                py={1}
+              >
+                <Avatar
+                  alt={userId.username}
+                  src=""
+                  sx={{ backgroundColor: "#C96F1F70", color: "#5B92A8" }}
+                />
+                <Box>
+                  <Typography
+                    fontWeight={"bold"}
+                    textTransform={"uppercase"}
+                    color="#5B92A8"
+                  >
+                    {userId.username}
+                  </Typography>
 
-                <Typography fontSize={"12px"} color="gray">
-                  {new Date(createdAt).toLocaleString("tr-TR")}
-                </Typography>
+                  <Typography fontSize={"12px"} color="gray">
+                    {new Date(createdAt).toLocaleString("tr-TR")}
+                  </Typography>
+                </Box>
               </Box>
+              <Typography
+                pl={8}
+                textAlign={"justify"}
+                sx={{ width: { xs: "90%", md: "50%" } }}
+              >
+                {comment}
+              </Typography>
+              <Divider />
             </Box>
-            <Typography
-              pl={8}
-              textAlign={"justify"}
-              sx={{ width: { xs: "90%", md: "50%" } }}
-            >
-              {comment}
-            </Typography>
-            <Divider />
+            {userId._id === user?._id && (
+              <ClearIcon
+                sx={{
+                  color: "brown",
+                  cursor: "pointer",
+                  ":hover": {
+                    bgcolor: "brown",
+                    color: "white",
+                    borderRadius: "50%",
+                  },
+                }}
+                onClick={()=>{
+                  handleDelete()
+                setSelectedComment(_id)}}
+              />
+            )}
           </Box>
         ))}
       </Box>
+
+      <DeleteModal
+        open={showDeleteModal}
+        onClose={handleCloseDeleteModal}
+        confirm={handleConfirmDelete}
+        message="Are you sure you want to delete this comment?"
+      />
     </>
   );
 };
