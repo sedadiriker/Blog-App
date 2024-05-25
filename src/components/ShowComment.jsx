@@ -13,15 +13,21 @@ import useBlogRequest from "../hooks/useBlogRequest";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteModal from "./Modals/DeleteModal";
 
-const ShowComment = ({ id }) => {
+const ShowComment = ({ id, setComments, selectedBlogComments,addComment }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const { getRequest, addRequest,deleteRequest } = useBlogRequest();
-  const[selectedComment,setSelectedComment] = useState(null)
-  const { comments } = useSelector((state) => state.blog);
+  const { getRequest, addRequest, deleteRequest } = useBlogRequest();
+  const [selectedCommentId, setSelectedCommentId] = useState(null);
   const { user } = useSelector((state) => state.auth);
+  const { comments } = useSelector((state) => state.blog);
+  const [filteredComments, setFilteredComments] = useState([]);
 
-  const selectComments = comments.filter((comment) => comment?.blogId === id);
-
+  // const filteredComments = comments.filter((comment) =>
+  //   selectedBlogComments.includes(comment._id)
+  // );
+  console.log("comments",comments)
+  console.log("selected", selectedBlogComments);
+  console.log("filter", filteredComments);
+  console.log(selectedCommentId)
   const handleDelete = () => {
     setShowDeleteModal(true);
   };
@@ -29,15 +35,21 @@ const ShowComment = ({ id }) => {
     setShowDeleteModal(false);
   };
   const handleConfirmDelete = () => {
-    deleteRequest("comments",selectedComment);
-    setShowDeleteModal(false)
+    deleteRequest("comments", selectedCommentId);
+    setShowDeleteModal(false);
+    setComments(filteredComments.filter(comment => comment._id !==selectedCommentId))
   };
-console.log(selectedComment)
+
   useEffect(() => {
     getRequest("comments", 1000000);
   }, []);
-  console.log("select", selectComments);
-  console.log("comments", comments);
+
+  useEffect(() => {
+    setFilteredComments(comments.filter((comment) =>
+      selectedBlogComments.includes(comment._id)
+    ));
+  }, [comments, selectedBlogComments]);
+  
   return (
     <>
       {/* COMMENT FORM */}
@@ -46,12 +58,17 @@ console.log(selectedComment)
           initialValues={{
             comment: "",
           }}
-          onSubmit={(values, actions) => {
-            addRequest("comments", {
+          onSubmit={async (values, actions) => {
+           const newComment = {
               blogId: id,
               comment: values.comment,
               userId: user,
-            });
+            };
+            await addRequest("comments", newComment);
+            setComments((prevComments) => [...prevComments, newComment]);
+            setFilteredComments((prevFilteredComments) => [...prevFilteredComments, newComment]);
+            addComment(newComment)
+            console.log(selectedBlogComments)
             actions.resetForm();
             actions.setSubmitting(false);
             console.log("values", values);
@@ -134,8 +151,8 @@ console.log(selectedComment)
 
       {/* COMMENTS */}
       <Box width={"100%"} pt={4}>
-        {selectComments.map(({ _id, userId, createdAt, comment }) => (
-          <Box display={"flex"} key={_id}>
+        {filteredComments.map((comment) => (
+          <Box display={"flex"} key={comment?._id}>
             <Box pb={2} width={"100%"}>
               <Box
                 display={"flex"}
@@ -145,7 +162,7 @@ console.log(selectedComment)
                 py={1}
               >
                 <Avatar
-                  alt={userId.username}
+                  alt={comment?.userId?.username}
                   src=""
                   sx={{ backgroundColor: "#C96F1F70", color: "#5B92A8" }}
                 />
@@ -155,11 +172,11 @@ console.log(selectedComment)
                     textTransform={"uppercase"}
                     color="#5B92A8"
                   >
-                    {userId.username}
+                    {comment?.userId?.username}
                   </Typography>
 
                   <Typography fontSize={"12px"} color="gray">
-                    {new Date(createdAt).toLocaleString("tr-TR")}
+                    {new Date(comment?.createdAt).toLocaleString("tr-TR")}
                   </Typography>
                 </Box>
               </Box>
@@ -168,11 +185,11 @@ console.log(selectedComment)
                 textAlign={"justify"}
                 sx={{ width: { xs: "90%", md: "50%" } }}
               >
-                {comment}
+                {comment.comment}
               </Typography>
               <Divider />
             </Box>
-            {userId._id === user?._id && (
+            {comment?.userId._id === user?._id && (
               <ClearIcon
                 sx={{
                   color: "brown",
@@ -183,9 +200,10 @@ console.log(selectedComment)
                     borderRadius: "50%",
                   },
                 }}
-                onClick={()=>{
-                  handleDelete()
-                setSelectedComment(_id)}}
+                onClick={() => {
+                  handleDelete();
+                  setSelectedCommentId(comment?._id);
+                }}
               />
             )}
           </Box>

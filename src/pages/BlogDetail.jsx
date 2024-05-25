@@ -19,6 +19,7 @@ const BlogDetail = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [writer, setWriter] = useState(null);
   const [showComment, setShowComment] = useState(false);
+  const [comments, setComments] = useState([]);
   const { blogs, users } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
   const { getRequest, putRequest, deleteRequest } = useBlogRequest();
@@ -42,30 +43,39 @@ const BlogDetail = () => {
   };
 
   const selectedBlog = blogs.find((blog) => blog._id === id);
-  // console.log(selectedBlog);
 
   const handleConfirmDelete = () => {
     deleteRequest("blogs",selectedBlog?._id);
     setShowComment(false);
   };
 
+  const addComment = (newComment) => {
+    const updatedBlog = {
+      ...selectedBlog,
+      comments: [...selectedBlog.comments, newComment],
+    };
+    setComments(updatedBlog.comments);
+  };
   useEffect(() => {
     getRequest("blogs");
     getRequest("users");
+    
   }, []);
-
+console.log("selectedblog",selectedBlog)
   useEffect(() => {
     if (selectedBlog) {
+      setComments(selectedBlog?.comments);
       putRequest("blogs", id, {
         countOfVisitors: selectedBlog.countOfVisitors + 1,
       });
     }
-  }, []);
+  }, [selectedBlog]);
+
   useEffect(() => {
     const writerUser = users.find((user) => user._id === selectedBlog.userId);
     setWriter(writerUser);
   }, []);
-
+console.log(selectedBlog)
   return (
     <Container
       sx={{
@@ -160,14 +170,14 @@ const BlogDetail = () => {
           countOfVisitors={selectedBlog?.countOfVisitors}
           path={"blogdetail"}
           setShowComment={setShowComment}
-          comments={selectedBlog?.comments}
+          comments={comments}
         />
       </Box>
 
       {/* COMMENTS */}
       {showComment ? (
         <>
-          <ShowComment id={id} />
+          <ShowComment id={id} setComments={setComments} selectedBlogComments={selectedBlog?.comments} addComment={addComment}/>
         </>
       ) : (
         ""
