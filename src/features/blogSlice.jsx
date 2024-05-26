@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   blogs: [],
+  blog: {},
   categories: [],
   comments: [],
   users: [],
@@ -14,17 +15,27 @@ const blogSlice = createSlice({
   initialState,
   reducers: {
     fetchstart: (state) => {
-      state.loading = true
+      state.loading = true;
     },
     getRequestSuccess: (state, { payload: { path, getData } }) => {
       state.loading = false;
       state[path] = getData;
     },
-    addRequestSuccess: (state, { payload: {path, addData } }) => {
+    getBlogSuccess: (state, { payload: {getData } }) => {
+      state.loading = false;
+      state.blog = getData;
+    },
+    addRequestSuccess: (state, { payload: { path, addData } }) => {
       state.loading = false;
       state[path].unshift(addData);
     },
-    paginationSuccess: (state,{payload: {data,details: {pages: { total },
+    paginationSuccess: (
+      state,
+      {
+        payload: {
+          data,
+          details: {
+            pages: { total },
           },
         },
       }
@@ -62,7 +73,7 @@ const blogSlice = createSlice({
         return blog;
       });
     },
-    deleteSuccess: (state, { payload: {path, id } }) => {
+    deleteSuccess: (state, { payload: { path, id } }) => {
       state.loading = false;
       state[path] = state[path].filter((item) => item._id === id);
     },
@@ -93,6 +104,7 @@ export const {
   deleteSuccess,
   editSuccess,
   fetchfail,
+  getBlogSuccess
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

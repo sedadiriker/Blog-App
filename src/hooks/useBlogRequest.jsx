@@ -1,11 +1,12 @@
 import useAxios from "./useAxios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addRequestSuccess,
   deleteSuccess,
   editSuccess,
   fetchfail,
   fetchstart,
+  getBlogSuccess,
   getRequestSuccess,
   paginationSuccess,
   postLikeSuccess,
@@ -18,6 +19,7 @@ const useBlogRequest = () => {
   const { axiosToken } = useAxios();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const{blog}=useSelector(state => state.blog)
 
   const getRequest = async (path, limit = null) => {
     dispatch(fetchstart());
@@ -35,6 +37,18 @@ const useBlogRequest = () => {
     }
   };
 
+  const getBlog = async(id)=>{
+    dispatch(fetchstart());
+    try {
+      const { data } = await axiosToken(`blogs/${id}`);
+      const getData = data.data;
+      dispatch(getBlogSuccess({getData }));
+    } catch (error) {
+      dispatch(fetchfail());
+      toastErrorNotify(`Failed to load blog`);
+    }
+  }
+
   const addRequest = async (path, formData) => {
     dispatch(fetchstart());
     try {
@@ -43,6 +57,7 @@ const useBlogRequest = () => {
       dispatch(addRequestSuccess({ path, addData }));
       if (path === "comments") {
         getRequest("comments", 10000000);
+        getBlog(formData.blogId)
       } else {
         getRequest(path);
       }
@@ -99,6 +114,9 @@ const useBlogRequest = () => {
       dispatch(deleteSuccess({path, id }));
       if(path === "comments"){
         getRequest("comments",1099990464565);
+        const comment = blog.comments.filter(comment => comment._id ===id)[0]
+        console.log(comment)
+        getBlog(comment.blogId)
       }else{
         getRequest(path);
       }
@@ -136,6 +154,7 @@ const useBlogRequest = () => {
     postLike,
     deleteRequest,
     editRequest,
+    getBlog
   };
 };
 

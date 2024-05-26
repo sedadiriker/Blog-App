@@ -13,21 +13,13 @@ import useBlogRequest from "../hooks/useBlogRequest";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteModal from "./Modals/DeleteModal";
 
-const ShowComment = ({ id, setComments, selectedBlogComments,addComment }) => {
+const ShowComment = ({ blog }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const { getRequest, addRequest, deleteRequest } = useBlogRequest();
+  const { addRequest, deleteRequest,getBlog } = useBlogRequest();
   const [selectedCommentId, setSelectedCommentId] = useState(null);
   const { user } = useSelector((state) => state.auth);
-  const { comments } = useSelector((state) => state.blog);
-  const [filteredComments, setFilteredComments] = useState([]);
 
-  // const filteredComments = comments.filter((comment) =>
-  //   selectedBlogComments.includes(comment._id)
-  // );
-  console.log("comments",comments)
-  console.log("selected", selectedBlogComments);
-  console.log("filter", filteredComments);
-  console.log(selectedCommentId)
+ 
   const handleDelete = () => {
     setShowDeleteModal(true);
   };
@@ -37,18 +29,9 @@ const ShowComment = ({ id, setComments, selectedBlogComments,addComment }) => {
   const handleConfirmDelete = () => {
     deleteRequest("comments", selectedCommentId);
     setShowDeleteModal(false);
-    setComments(filteredComments.filter(comment => comment._id !==selectedCommentId))
+    blog.comments.filter(comment => comment._id !==selectedCommentId)
   };
 
-  useEffect(() => {
-    getRequest("comments", 1000000);
-  }, []);
-
-  useEffect(() => {
-    setFilteredComments(comments.filter((comment) =>
-      selectedBlogComments.includes(comment._id)
-    ));
-  }, [comments, selectedBlogComments]);
   
   return (
     <>
@@ -58,20 +41,15 @@ const ShowComment = ({ id, setComments, selectedBlogComments,addComment }) => {
           initialValues={{
             comment: "",
           }}
-          onSubmit={async (values, actions) => {
+          onSubmit={ (values, actions) => {
            const newComment = {
-              blogId: id,
+              blogId: blog._id,
               comment: values.comment,
               userId: user,
             };
-            await addRequest("comments", newComment);
-            setComments((prevComments) => [...prevComments, newComment]);
-            setFilteredComments((prevFilteredComments) => [...prevFilteredComments, newComment]);
-            addComment(newComment)
-            console.log(selectedBlogComments)
+            addRequest("comments", newComment);
             actions.resetForm();
             actions.setSubmitting(false);
-            console.log("values", values);
           }}
         >
           {({
@@ -151,7 +129,7 @@ const ShowComment = ({ id, setComments, selectedBlogComments,addComment }) => {
 
       {/* COMMENTS */}
       <Box width={"100%"} pt={4}>
-        {filteredComments.map((comment) => (
+        {blog.comments.map((comment) => (
           <Box display={"flex"} key={comment?._id}>
             <Box pb={2} width={"100%"}>
               <Box

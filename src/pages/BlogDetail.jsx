@@ -19,10 +19,11 @@ const BlogDetail = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [writer, setWriter] = useState(null);
   const [showComment, setShowComment] = useState(false);
-  const [comments, setComments] = useState([]);
-  const { blogs, users } = useSelector((state) => state.blog);
+
+
+  const {users,blog } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
-  const { getRequest, putRequest, deleteRequest } = useBlogRequest();
+  const { getRequest, putRequest, deleteRequest,getBlog } = useBlogRequest();
   const { id } = useParams();
 
   //? Modal ile editleme ve silme işlemleri
@@ -42,40 +43,34 @@ const BlogDetail = () => {
     setShowEditModal(false);
   };
 
-  const selectedBlog = blogs.find((blog) => blog._id === id);
 
   const handleConfirmDelete = () => {
-    deleteRequest("blogs",selectedBlog?._id);
+    deleteRequest("blogs",blog?._id);
     setShowComment(false);
   };
 
-  const addComment = (newComment) => {
-    const updatedBlog = {
-      ...selectedBlog,
-      comments: [...selectedBlog.comments, newComment],
-    };
-    setComments(updatedBlog.comments);
-  };
+ 
   useEffect(() => {
     getRequest("blogs");
     getRequest("users");
-    
+    getRequest("comments", 1000000);
+    getBlog(id)
   }, []);
-console.log("selectedblog",selectedBlog)
-  useEffect(() => {
-    if (selectedBlog) {
-      setComments(selectedBlog?.comments);
-      putRequest("blogs", id, {
-        countOfVisitors: selectedBlog.countOfVisitors + 1,
-      });
-    }
-  }, [selectedBlog]);
 
   useEffect(() => {
-    const writerUser = users.find((user) => user._id === selectedBlog.userId);
+    if (blog) {
+      putRequest("blogs", id, {
+        countOfVisitors: blog.countOfVisitors + 1,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const writerUser = users.find((user) => user._id === blog.userId);
     setWriter(writerUser);
   }, []);
-console.log(selectedBlog)
+
+  console.log("blog",blog)
   return (
     <Container
       sx={{
@@ -94,7 +89,7 @@ console.log(selectedBlog)
         fontWeight={"bold"}
         textTransform={"uppercase"}
       >
-        {selectedBlog?.title}
+        {blog?.title}
       </Typography>
 
       {/* BLOG İMAGE */}
@@ -102,8 +97,8 @@ console.log(selectedBlog)
         sx={{ width: { xs: "80vw", md: "50vw" }, height: { xs: 200, md: 400 } }}
       >
         <img
-          src={selectedBlog?.image}
-          alt={selectedBlog?.title}
+          src={blog?.image}
+          alt={blog?.title}
           style={{ width: "100%", height: "100%", objectFit: "contain" }}
         />
       </Box>
@@ -139,7 +134,7 @@ console.log(selectedBlog)
             </Typography>
           )}
           <Typography fontSize={"12px"} color="gray">
-            {new Date(selectedBlog?.createdAt).toLocaleString("tr-TR")}
+            {new Date(blog?.createdAt).toLocaleString("tr-TR")}
           </Typography>
         </Box>
       </Box>
@@ -157,32 +152,32 @@ console.log(selectedBlog)
             color: "#5B92A8",
           }}
         >
-          {selectedBlog?.content.slice(0, 1)}
+          {blog?.content?.slice(0, 1)}
         </span>
-        {selectedBlog?.content.slice(1)}
+        {blog?.content?.slice(1)}
       </Typography>
 
       {/* ICONS */}
       <Box justifySelf="flex-start" sx={{ width: "100%" }}>
         <IconButtons
           id={id}
-          likes={selectedBlog?.likes}
-          countOfVisitors={selectedBlog?.countOfVisitors}
+          likes={blog?.likes}
+          countOfVisitors={blog?.countOfVisitors}
           path={"blogdetail"}
           setShowComment={setShowComment}
-          comments={comments}
+          comments={blog.comments}
         />
       </Box>
 
       {/* COMMENTS */}
       {showComment ? (
         <>
-          <ShowComment id={id} setComments={setComments} selectedBlogComments={selectedBlog?.comments} addComment={addComment}/>
+          <ShowComment blog={blog}/>
         </>
       ) : (
         ""
       )}
-      {user._id === selectedBlog?.userId ? (
+      {user._id === blog?.userId ? (
         <Box>
           <Button sx={{ color: "green" }} onClick={handleEdit}>
             Update
@@ -206,7 +201,7 @@ console.log(selectedBlog)
         open={showEditModal}
         onClose={handleCloseEditModal}
         confirm={handleConfirmEdit}
-        {...selectedBlog}
+        {...blog}
       />
     </Container>
   );
