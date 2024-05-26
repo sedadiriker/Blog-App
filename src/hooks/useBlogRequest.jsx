@@ -19,7 +19,7 @@ const useBlogRequest = () => {
   const { axiosToken } = useAxios();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const{blog}=useSelector(state => state.blog)
+  const { blog } = useSelector((state) => state.blog);
 
   const getRequest = async (path, limit = null) => {
     dispatch(fetchstart());
@@ -37,17 +37,17 @@ const useBlogRequest = () => {
     }
   };
 
-  const getBlog = async(id)=>{
+  const getBlog = async (id) => {
     dispatch(fetchstart());
     try {
       const { data } = await axiosToken(`blogs/${id}`);
       const getData = data.data;
-      dispatch(getBlogSuccess({getData }));
+      dispatch(getBlogSuccess({ getData }));
     } catch (error) {
       dispatch(fetchfail());
       toastErrorNotify(`Failed to load blog`);
     }
-  }
+  };
 
   const addRequest = async (path, formData) => {
     dispatch(fetchstart());
@@ -57,7 +57,7 @@ const useBlogRequest = () => {
       dispatch(addRequestSuccess({ path, addData }));
       if (path === "comments") {
         getRequest("comments", 10000000);
-        getBlog(formData.blogId)
+        getBlog(formData.blogId);
       } else {
         getRequest(path);
       }
@@ -99,30 +99,37 @@ const useBlogRequest = () => {
     try {
       const { data } = await axiosToken.post(`/blogs/${blogId}/postLike`);
       dispatch(postLikeSuccess({ data, blogId }));
-      getBlog(blogId)
+      getRequest("blogs");
     } catch (err) {
       dispatch(fetchfail());
-      toastErrorNotify("Failed to add .");
-      console.log(err);
+      if (err.response.data.message === "NoPermission: You must login.") {
+        toastErrorNotify("You must login to add like");
+      } else {
+        toastErrorNotify("Failed to add .");
+      }
+
+      console.log(err.response.data.message);
     }
   };
 
-  const deleteRequest = async (path,id) => {
+  const deleteRequest = async (path, id) => {
     dispatch(fetchstart());
     try {
       await axiosToken.delete(`/${path}/${id}`);
-      dispatch(deleteSuccess({path, id }));
-      if(path === "comments"){
-        getRequest("comments",1099990464565);
-        const comment = blog.comments.filter(comment => comment._id ===id)[0]
-        console.log(comment)
-        getBlog(comment.blogId)
-      }else{
+      dispatch(deleteSuccess({ path, id }));
+      if (path === "comments") {
+        getRequest("comments", 1099990464565);
+        const comment = blog.comments.filter(
+          (comment) => comment._id === id
+        )[0];
+        console.log(comment);
+        getBlog(comment.blogId);
+      } else {
         getRequest(path);
       }
-      if(path === "blogs"){
-        navigate("/myblog")
-      };
+      if (path === "blogs") {
+        navigate("/myblog");
+      }
       toastSuccessNotify("deleted successfully.");
     } catch (error) {
       dispatch(fetchfail());
@@ -153,7 +160,7 @@ const useBlogRequest = () => {
     postLike,
     deleteRequest,
     editRequest,
-    getBlog
+    getBlog,
   };
 };
 
