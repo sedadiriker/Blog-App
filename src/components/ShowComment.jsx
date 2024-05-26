@@ -15,7 +15,7 @@ import DeleteModal from "./Modals/DeleteModal";
 
 const ShowComment = ({ blog }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const { addRequest, deleteRequest,getBlog } = useBlogRequest();
+  const { addRequest, deleteRequest } = useBlogRequest();
   const [selectedCommentId, setSelectedCommentId] = useState(null);
   const { user } = useSelector((state) => state.auth);
 

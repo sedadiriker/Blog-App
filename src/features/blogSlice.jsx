@@ -44,15 +44,15 @@ const blogSlice = createSlice({
       state.blogs = data;
       state.totalPages = total;
     },
-    putRequestSuccess: (state, { payload: { path, updateData } }) => {
-      state.loading = false;
-      state[path] = state[path].map((item) => {
-        if (item.id === updateData._id) {
-          return updateData;
-        }
-        return item;
-      });
-    },
+    // putRequestSuccess: (state, { payload: { path, updateData } }) => {
+    //   state.loading = false;
+    //   state[path] = state[path].map((item) => {
+    //     if (item.id === updateData._id) {
+    //       return updateData;
+    //     }
+    //     return item;
+    //   });
+    // },
     postLikeSuccess: (
       state,
       {
@@ -98,7 +98,6 @@ export const {
   getRequestSuccess,
   addRequestSuccess,
   paginationSuccess,
-  putRequestSuccess,
   addCommentSucess,
   postLikeSuccess,
   deleteSuccess,

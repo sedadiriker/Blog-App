@@ -69,19 +69,19 @@ const useBlogRequest = () => {
     }
   };
 
-  const putRequest = async (path, id, formData) => {
-    dispatch(fetchstart());
-    try {
-      const { data } = await axiosToken.put(`/${path}/${id}`, formData);
-      const updateData = data.new;
-      dispatch(putRequestSuccess({ path, updateData }));
-      //   toastSuccessNotify("Update successfully.");
-    } catch (err) {
-      dispatch(fetchfail());
-      //   toastErrorNotify("Failed to update.");
-      console.log(err);
-    }
-  };
+  // const putRequest = async (path, id, ) => {
+  //   dispatch(fetchstart());
+  //   try {
+  //     const { data } = await axiosToken.put(`/${path}/${id}`,);
+  //     const updateData = data.new;
+  //     dispatch(putRequestSuccess({ path, updateData }));
+  //     //   toastSuccessNotify("Update successfully.");
+  //   } catch (err) {
+  //     dispatch(fetchfail());
+  //     //   toastErrorNotify("Failed to update.");
+  //     console.log(err);
+  //   }
+  // };
 
   const getBlogsPage = async (page, limit) => {
     dispatch(fetchstart());
@@ -150,7 +150,6 @@ const useBlogRequest = () => {
     getRequest,
     addRequest,
     getBlogsPage,
-    putRequest,
     postLike,
     deleteRequest,
     editRequest,

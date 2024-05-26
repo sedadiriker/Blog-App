@@ -51,19 +51,16 @@ const BlogDetail = () => {
 
  
   useEffect(() => {
-    getRequest("blogs");
     getRequest("users");
     getRequest("comments", 1000000);
     getBlog(id)
   }, []);
 
-  useEffect(() => {
-    if (blog) {
-      putRequest("blogs", id, {
-        countOfVisitors: blog.countOfVisitors + 1,
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (blog) {
+  //     putRequest("blogs", id);
+  //   }
+  // }, []);
 
   useEffect(() => {
     const writerUser = users.find((user) => user._id === blog.userId);

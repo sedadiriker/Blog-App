@@ -4,7 +4,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import { useNavigate } from "react-router-dom";
 import useBlogRequest from "../hooks/useBlogRequest";
-import { useEffect } from "react";
 
 const IconButtons = ({
   id,
@@ -18,9 +17,7 @@ const IconButtons = ({
   const { postLike } = useBlogRequest();
 // console.log("ıconcomment",comments)
 
-useEffect(()=>{
-    
-})
+
   return (
     <>
       <IconButton
