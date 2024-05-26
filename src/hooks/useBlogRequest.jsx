@@ -10,7 +10,6 @@ import {
   getRequestSuccess,
   paginationSuccess,
   postLikeSuccess,
-  putRequestSuccess,
 } from "../features/blogSlice";
 import { toastSuccessNotify, toastErrorNotify } from "../helper/ToastNotify";
 import { useNavigate } from "react-router-dom";
@@ -42,7 +41,7 @@ const useBlogRequest = () => {
     try {
       const { data } = await axiosToken(`blogs/${id}`);
       const getData = data.data;
-      dispatch(getBlogSuccess({ getData }));
+      dispatch(getBlogSuccess(getData));
     } catch (error) {
       dispatch(fetchfail());
       toastErrorNotify(`Failed to load blog`);
@@ -56,7 +55,7 @@ const useBlogRequest = () => {
       const addData = data.data;
       dispatch(addRequestSuccess({ path, addData }));
       if (path === "comments") {
-        getRequest("comments", 10000000);
+        // getRequest("comments", 10000000);
         getBlog(formData.blogId);
       } else {
         getRequest(path);
@@ -68,20 +67,6 @@ const useBlogRequest = () => {
       console.log(err);
     }
   };
-
-  // const putRequest = async (path, id, ) => {
-  //   dispatch(fetchstart());
-  //   try {
-  //     const { data } = await axiosToken.put(`/${path}/${id}`,);
-  //     const updateData = data.new;
-  //     dispatch(putRequestSuccess({ path, updateData }));
-  //     //   toastSuccessNotify("Update successfully.");
-  //   } catch (err) {
-  //     dispatch(fetchfail());
-  //     //   toastErrorNotify("Failed to update.");
-  //     console.log(err);
-  //   }
-  // };
 
   const getBlogsPage = async (page, limit) => {
     dispatch(fetchstart());
@@ -99,7 +84,8 @@ const useBlogRequest = () => {
     try {
       const { data } = await axiosToken.post(`/blogs/${blogId}/postLike`);
       dispatch(postLikeSuccess({ data, blogId }));
-      getRequest("blogs");
+      // getRequest("blogs");
+      // getBlog(blogId);
     } catch (err) {
       dispatch(fetchfail());
       if (err.response.data.message === "NoPermission: You must login.") {

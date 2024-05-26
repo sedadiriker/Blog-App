@@ -57,7 +57,7 @@ const BlogDetail = () => {
   }, []);
 
   useEffect(() => {
-    const writerUser = users.find((user) => user._id === blog.userId);
+    const writerUser = users.find((user) => user._id === blog?.userId);
     setWriter(writerUser);
   }, []);
 
@@ -156,7 +156,7 @@ const BlogDetail = () => {
           countOfVisitors={blog?.countOfVisitors}
           path={"blogdetail"}
           setShowComment={setShowComment}
-          comments={blog.comments}
+          comments={blog?.comments}
         />
       </Box>
 

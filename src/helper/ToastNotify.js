@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Slide } from "react-toastify";
+import { Slide,Zoom,Flip } from "react-toastify";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import WarningIcon from '@mui/icons-material/Warning';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -33,7 +33,7 @@ export const toastSuccessNotify = (msg) => {
     style: { backgroundColor: "#CE987F70", color: "black" },
     icon: <CheckCircleOutlineIcon sx={{color:"green"}} />,
     position: "bottom-right",
-    transition: Slide,
+    transition: Zoom,
     progressStyle: {
       background: "green" 
     }
@@ -51,7 +51,7 @@ export const toastErrorNotify = (msg) => {
     style: { backgroundColor: "#CE987F70", color: "black" },
     icon: <ErrorOutlineIcon sx={{color:"red"}} />,
     position: "bottom-right",
-    transition: Slide,
+    transition: Flip,
     progressStyle: {
       background: "red" 
     }

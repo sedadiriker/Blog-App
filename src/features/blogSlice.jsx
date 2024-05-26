@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   blogs: [],
   blog: {},
+  like:{},
   categories: [],
   comments: [],
   users: [],
@@ -21,9 +22,9 @@ const blogSlice = createSlice({
       state.loading = false;
       state[path] = getData;
     },
-    getBlogSuccess: (state, { payload: {getData } }) => {
+    getBlogSuccess: (state, { payload }) => {
       state.loading = false;
-      state.blog = getData;
+      state.blog = payload;
     },
     addRequestSuccess: (state, { payload: { path, addData } }) => {
       state.loading = false;
@@ -44,34 +45,9 @@ const blogSlice = createSlice({
       state.blogs = data;
       state.totalPages = total;
     },
-    // putRequestSuccess: (state, { payload: { path, updateData } }) => {
-    //   state.loading = false;
-    //   state[path] = state[path].map((item) => {
-    //     if (item.id === updateData._id) {
-    //       return updateData;
-    //     }
-    //     return item;
-    //   });
-    // },
-    postLikeSuccess: (
-      state,
-      {
-        payload: {
-          data: { countOfLikes },
-          blogId,
-        },
-      }
-    ) => {
+    postLikeSuccess: (state, { payload }) => {
       state.loading = false;
-      state.blogs = state.blogs.map((blog) => {
-        if (blog.id === blogId) {
-          return {
-            ...blog,
-            countOfLikes,
-          };
-        }
-        return blog;
-      });
+      state.like = payload;
     },
     deleteSuccess: (state, { payload: { path, id } }) => {
       state.loading = false;
@@ -103,7 +79,7 @@ export const {
   deleteSuccess,
   editSuccess,
   fetchfail,
-  getBlogSuccess
+  getBlogSuccess,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;
