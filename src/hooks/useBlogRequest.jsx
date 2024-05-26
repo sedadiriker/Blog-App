@@ -99,7 +99,7 @@ const useBlogRequest = () => {
     try {
       const { data } = await axiosToken.post(`/blogs/${blogId}/postLike`);
       dispatch(postLikeSuccess({ data, blogId }));
-      getRequest("blogs");
+      getBlog(blogId)
     } catch (err) {
       dispatch(fetchfail());
       toastErrorNotify("Failed to add .");

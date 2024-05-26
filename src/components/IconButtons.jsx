@@ -16,8 +16,7 @@ const IconButtons = ({
   const navigate = useNavigate();
   const { postLike } = useBlogRequest();
 // console.log("ıconcomment",comments)
-
-
+console.log("likes",likes)
   return (
     <>
       <IconButton

@@ -23,7 +23,7 @@ const BlogDetail = () => {
 
   const {users,blog } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
-  const { getRequest, putRequest, deleteRequest,getBlog } = useBlogRequest();
+  const { getRequest, deleteRequest,getBlog } = useBlogRequest();
   const { id } = useParams();
 
   //? Modal ile editleme ve silme işlemleri
@@ -55,12 +55,6 @@ const BlogDetail = () => {
     getRequest("comments", 1000000);
     getBlog(id)
   }, []);
-
-  // useEffect(() => {
-  //   if (blog) {
-  //     putRequest("blogs", id);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const writerUser = users.find((user) => user._id === blog.userId);
