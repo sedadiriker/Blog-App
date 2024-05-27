@@ -21,7 +21,7 @@ const BlogDetail = () => {
   const [showComment, setShowComment] = useState(false);
 
 
-  const {users,blog } = useSelector((state) => state.blog);
+  const {users,blog,blogComments } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
   const { getRequest, deleteRequest,getBlog } = useBlogRequest();
   const { id } = useParams();
@@ -52,7 +52,7 @@ const BlogDetail = () => {
  
   useEffect(() => {
     getRequest("users");
-    getRequest("comments", 1000000);
+    // getRequest("comments", 1000000);
     getBlog(id)
   }, []);
 
@@ -61,7 +61,6 @@ const BlogDetail = () => {
     setWriter(writerUser);
   }, []);
 
-  console.log("blog",blog)
   return (
     <Container
       sx={{
@@ -163,7 +162,7 @@ const BlogDetail = () => {
       {/* COMMENTS */}
       {showComment ? (
         <>
-          <ShowComment blog={blog}/>
+          <ShowComment blogComments={blogComments} blog={blog}/>
         </>
       ) : (
         ""

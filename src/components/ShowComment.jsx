@@ -13,13 +13,12 @@ import useBlogRequest from "../hooks/useBlogRequest";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteModal from "./Modals/DeleteModal";
 
-const ShowComment = ({ blog }) => {
+const ShowComment = ({ blogComments,blog }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { addRequest, deleteRequest } = useBlogRequest();
   const [selectedCommentId, setSelectedCommentId] = useState(null);
   const { user } = useSelector((state) => state.auth);
 
- 
   const handleDelete = () => {
     setShowDeleteModal(true);
   };
@@ -29,7 +28,7 @@ const ShowComment = ({ blog }) => {
   const handleConfirmDelete = () => {
     deleteRequest("comments", selectedCommentId);
     setShowDeleteModal(false);
-    blog.comments.filter(comment => comment._id !==selectedCommentId)
+    blogComments.filter(comment => comment._id !==selectedCommentId)
   };
 
   
@@ -129,7 +128,7 @@ const ShowComment = ({ blog }) => {
 
       {/* COMMENTS */}
       <Box width={"100%"} pt={4}>
-        {blog.comments.map((comment) => (
+        {blogComments.map((comment) => (
           <Box display={"flex"} key={comment?._id}>
             <Box pb={2} width={"100%"}>
               <Box

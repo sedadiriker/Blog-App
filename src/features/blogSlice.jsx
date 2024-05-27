@@ -4,6 +4,7 @@ const initialState = {
   blogs: [],
   blog: {},
   like:{},
+  blogComments:[],
   categories: [],
   comments: [],
   users: [],
@@ -25,10 +26,11 @@ const blogSlice = createSlice({
     getBlogSuccess: (state, { payload }) => {
       state.loading = false;
       state.blog = payload;
+      state.blogComments = state.blog.comments
     },
     addRequestSuccess: (state, { payload: { path, addData } }) => {
       state.loading = false;
-      state[path].unshift(addData);
+      state[path] = [addData,...state[path]]
     },
     paginationSuccess: (
       state,

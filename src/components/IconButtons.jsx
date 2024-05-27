@@ -18,14 +18,27 @@ const IconButtons = ({
   const navigate = useNavigate();
   const { postLike } = useBlogRequest();
   const { like } = useSelector(state => state.blog);
-  const [likeCount, setLikeCount] = useState(likes.length);
+  const [likeCount, setLikeCount] = useState(null);
+  const[didUserLike,setDidUserLike] = useState(null)
+  const{user}=useSelector(state=>state.auth)
 
+  const likeColor = () => {
+    if (didUserLike !== null) {
+      return didUserLike ? "#A73159" : "#A7315950";
+    }
+    return likes.some((item) => item === user?._id) ? "#A73159" : "#A7315950";
+  };
+  
   useEffect(() => {
     like?.blogId === id &&
       setLikeCount(like?.data?.countOfLikes)
-  }, [like?.data?.countOfLikes]);
-console.log(like)
-console.log("likes",likes)
+      setDidUserLike(like?.data?.didUserLike)
+  }, [like,id]);
+
+// console.log("likes",likes)
+// console.log(userLikes)
+console.log("button",like)
+
   return (
     <>
       <IconButton
@@ -33,7 +46,8 @@ console.log("likes",likes)
         sx={{ fontSize: "1rem" }}
         onClick={() => postLike(id)}
       >
-        {likeCount!== null ? likeCount : likes?.length} <FavoriteIcon sx={{ color: "#A73159" }} />
+        {likeCount!== null ? likeCount : likes?.length} <FavoriteIcon sx={{ color: likeColor() }} />
+
       </IconButton>
       <IconButton
         aria-label="comment"

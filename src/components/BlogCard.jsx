@@ -12,7 +12,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ShareBlog from "./ShareBlog";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import IconButtons from "./IconButtons";
 
@@ -36,7 +36,7 @@ export default function BlogCard({
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+// console.log("blogCard",_id)
   return (
     <Card
     // onClick={(e) => setId(_id)}

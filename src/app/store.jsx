@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auhtSlice";
 import storage from 'redux-persist/lib/storage' //? defaults to LOCALSTORAGE for web
 // import storage from 'redux-persist/lib/storage/session' //? defaults to SESSİON for web
@@ -14,18 +14,26 @@ import {
 } from "redux-persist"
 import blogReducer from "../features/blogSlice";
  
-const persistConfig = {
-  key: 'root',
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+}
+
+const blogPersistConfig = {
+  key: 'blog',
   storage,
 }
  
-const persistedReducer = persistReducer(persistConfig, authReducer) //! Kalıcı olmasını istediklerimizi burda birleştirip yazabiliriz.
- 
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedBlogReducer = persistReducer(blogPersistConfig, blogReducer);
+
+const rootReducer = combineReducers({
+  auth: persistedAuthReducer,
+  blog: persistedBlogReducer,
+});
+
 const store = configureStore({
-  reducer: {
-    auth: persistedReducer,
-    blog:blogReducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
