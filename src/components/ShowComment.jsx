@@ -7,17 +7,19 @@ import {
   Typography,
 } from "@mui/material";
 import { Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogRequest from "../hooks/useBlogRequest";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteModal from "./Modals/DeleteModal";
 
-const ShowComment = ({ blogComments,blog }) => {
+const ShowComment = ({ blog }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const { addRequest, deleteRequest } = useBlogRequest();
+  const { addRequest, deleteRequest,getRequest } = useBlogRequest();
   const [selectedCommentId, setSelectedCommentId] = useState(null);
   const { user } = useSelector((state) => state.auth);
+  const { comments } = useSelector((state) => state.blog);
+
 
   const handleDelete = () => {
     setShowDeleteModal(true);
@@ -28,10 +30,22 @@ const ShowComment = ({ blogComments,blog }) => {
   const handleConfirmDelete = () => {
     deleteRequest("comments", selectedCommentId);
     setShowDeleteModal(false);
-    blogComments.filter(comment => comment._id !==selectedCommentId)
+    userComments.filter(comment => comment._id !==selectedCommentId)
   };
 
-  
+  const userComments = useMemo(() => {
+    return comments.filter(comment => 
+      blog.comments.some(blogComment => blogComment._id === comment._id)
+    );
+  }, [comments, blog.comments]);
+
+// console.log("blog",blog)
+// console.log("usercomment",userComments)
+// console.log("comments",comments)
+
+useEffect(()=>{
+  getRequest("comments",1000000000)
+},[])
   return (
     <>
       {/* COMMENT FORM */}
@@ -44,7 +58,6 @@ const ShowComment = ({ blogComments,blog }) => {
            const newComment = {
               blogId: blog._id,
               comment: values.comment,
-              userId: user,
             };
             addRequest("comments", newComment);
             actions.resetForm();
@@ -128,7 +141,7 @@ const ShowComment = ({ blogComments,blog }) => {
 
       {/* COMMENTS */}
       <Box width={"100%"} pt={4}>
-        {blogComments.map((comment) => (
+        {userComments?.map((comment) => (
           <Box display={"flex"} key={comment?._id}>
             <Box pb={2} width={"100%"}>
               <Box

@@ -4,7 +4,6 @@ const initialState = {
   blogs: [],
   blog: {},
   like:{},
-  blogComments:[],
   categories: [],
   comments: [],
   users: [],
@@ -12,7 +11,9 @@ const initialState = {
   loading: false,
   error: false,
 };
+
 const blogSlice = createSlice({
+
   name: "blog",
   initialState,
   reducers: {
@@ -26,11 +27,14 @@ const blogSlice = createSlice({
     getBlogSuccess: (state, { payload }) => {
       state.loading = false;
       state.blog = payload;
-      state.blogComments = state.blog.comments
     },
     addRequestSuccess: (state, { payload: { path, addData } }) => {
       state.loading = false;
       state[path] = [addData,...state[path]]
+      if(path === "comments"){
+        state.blog.comments = [...state.blog.comments,addData]
+      }
+      console.log("adddata",addData)
     },
     paginationSuccess: (
       state,
@@ -54,6 +58,9 @@ const blogSlice = createSlice({
     deleteSuccess: (state, { payload: { path, id } }) => {
       state.loading = false;
       state[path] = state[path].filter((item) => item._id === id);
+      if(path === "comments"){
+        state.blog.comments = state.blog.comments.filter((item) => item._id !== id)
+      }
     },
     editSuccess: (state, { payload: { updateData } }) => {
       state.loading = false;

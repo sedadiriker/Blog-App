@@ -21,7 +21,7 @@ const IconButtons = ({
   const [likeCount, setLikeCount] = useState(null);
   const[didUserLike,setDidUserLike] = useState(null)
   const{user}=useSelector(state=>state.auth)
-
+  const {blog } = useSelector((state) => state.blog);
   const likeColor = () => {
     if (didUserLike !== null) {
       return didUserLike ? "#A73159" : "#A7315950";
@@ -33,11 +33,11 @@ const IconButtons = ({
     like?.blogId === id &&
       setLikeCount(like?.data?.countOfLikes)
       setDidUserLike(like?.data?.didUserLike)
-  }, [like,id]);
+  }, [like,id,blog]);
 
 // console.log("likes",likes)
 // console.log(userLikes)
-console.log("button",like)
+// console.log("button",like)
 
   return (
     <>
@@ -58,7 +58,7 @@ console.log("button",like)
             : () => navigate(`/blogdetail/${id}`)
         }
       >
-        {comments.length} <InsertCommentIcon sx={{ color: "#C96F1F" }} />
+        {blog.comments.length} <InsertCommentIcon sx={{ color: "#C96F1F" }} />
       </IconButton>
       <IconButton aria-label="follow" sx={{ fontSize: "1rem" }}>
         {countOfVisitors} <VisibilityIcon sx={{ color: "#385E40" }} />

@@ -52,10 +52,11 @@ const BlogDetail = () => {
  
   useEffect(() => {
     getRequest("users");
-    // getRequest("comments", 1000000);
     getBlog(id)
   }, []);
 
+
+console.log("blogdetail",blogComments)
   useEffect(() => {
     const writerUser = users.find((user) => user._id === blog?.userId);
     setWriter(writerUser);

@@ -57,7 +57,6 @@ const useBlogRequest = () => {
       dispatch(addRequestSuccess({ path, addData }));
       if (path === "comments") {
         getRequest("comments", 10000000);
-        // getBlog(formData.blogId);
       } else {
         getRequest(path);
       }
@@ -107,11 +106,6 @@ const useBlogRequest = () => {
       dispatch(deleteSuccess({ path, id }));
       if (path === "comments") {
         getRequest("comments", 1099990464565);
-        const comment = blog.comments.filter(
-          (comment) => comment._id === id
-        )[0];
-        console.log(comment);
-        getBlog(comment.blogId);
       } else {
         getRequest(path);
       }
