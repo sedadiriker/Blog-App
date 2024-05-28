@@ -1,5 +1,5 @@
 
-## Proje Skeleton
+## Projet Skeleton
 ```
 MY BLOG
 |
