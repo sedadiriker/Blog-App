@@ -39,6 +39,7 @@ const IconButtons = ({
 // console.log(userLikes)
 // console.log("button",like)
 
+
   return (
     <>
       <IconButton
@@ -58,7 +59,7 @@ const IconButtons = ({
             : () => navigate(`/blogdetail/${id}`)
         }
       >
-        {blog?.comments?.length} <InsertCommentIcon sx={{ color: "#C96F1F" }} />
+        {path === "blogdetail" ? blog?.comments?.length : comments?.length} <InsertCommentIcon sx={{ color: "#C96F1F" }} />
       </IconButton>
       <IconButton aria-label="follow" sx={{ fontSize: "1rem" }}>
         {countOfVisitors} <VisibilityIcon sx={{ color: "#385E40" }} />

@@ -37,6 +37,7 @@ export default function BlogCard({
     setAnchorEl(null);
   };
 // console.log("blogCard",_id)
+console.log("blogcard",comments)
   return (
     <Card
     // onClick={(e) => setId(_id)}
