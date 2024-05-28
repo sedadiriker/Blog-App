@@ -16,7 +16,7 @@ const BlogDetail = () => {
   const [showComment, setShowComment] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const { users, blog } = useSelector((state) => state.blog);
+  const { users, blog,like } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
   const { getRequest, deleteRequest, getBlog } = useBlogRequest();
   const { id } = useParams();
@@ -50,6 +50,7 @@ const BlogDetail = () => {
 
   useEffect(() => {
     const writerUser = users.find((user) => user._id === blog?.userId?._id);
+    console.log("writteruser",writerUser)
     setWriter(writerUser);
   }, []);
 
@@ -60,6 +61,10 @@ const BlogDetail = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  console.log("detail",user._id )
+  console.log("detail2",blog.userId._id )
+  console.log("users",users)
+  console.log(blog)
   return (
     <>
       {loading ? (
@@ -157,11 +162,12 @@ const BlogDetail = () => {
           <Box justifySelf="flex-start" sx={{ width: "100%" }}>
             <IconButtons
               id={id}
-              likes={blog?.likes}
+              likes={blog?.likes.length}
               countOfVisitors={blog?.countOfVisitors}
               path={"blogdetail"}
               setShowComment={setShowComment}
               comments={blog?.comments}
+              didUserLike={like?.blogId === id ? like?.data?.didUserLike : blog?.likes.some((item) => item === user?._id)}
             />
           </Box>
 
