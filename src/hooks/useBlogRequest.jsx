@@ -1,5 +1,5 @@
 import useAxios from "./useAxios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   addRequestSuccess,
   deleteSuccess,
@@ -18,7 +18,6 @@ const useBlogRequest = () => {
   const { axiosToken } = useAxios();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { blog } = useSelector((state) => state.blog);
 
   const getRequest = async (path, limit = null) => {
     dispatch(fetchstart());

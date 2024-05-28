@@ -82,6 +82,7 @@ useEffect(()=>{
                   py: "3rem",
                   px: "1.5rem",
                   borderRadius: "10px",
+                  ":before":{}
                 }}
               >
                 <TextField

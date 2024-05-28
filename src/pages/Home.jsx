@@ -10,6 +10,11 @@ import { Container } from "@mui/material";
 
 const Home = () => {
   const { blogs, totalPages } = useSelector((state) => state.blog);
+  const { user } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth)
+
+  console.log("user",user)
+  console.log("token",token)
   const { getBlogsPage } = useBlogRequest();
   const [currentPage, setCurrentPage] = useState(1);
 
