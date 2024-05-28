@@ -1,5 +1,8 @@
+
+## Proje Skeleton
 ```
-.
+MY BLOG
+|
 ├── README.md
 ├── package.json
 ├── public
