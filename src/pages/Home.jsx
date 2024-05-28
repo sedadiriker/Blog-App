@@ -1,4 +1,3 @@
-// Home.js
 import { useSelector } from "react-redux";
 import useBlogRequest from "../hooks/useBlogRequest";
 import { useEffect, useState } from "react";
@@ -10,11 +9,6 @@ import { Container } from "@mui/material";
 
 const Home = () => {
   const { blogs, totalPages } = useSelector((state) => state.blog);
-  const { user } = useSelector((state) => state.auth);
-  const { token } = useSelector((state) => state.auth)
-
-  console.log("user",user)
-  console.log("token",token)
   const { getBlogsPage } = useBlogRequest();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -28,7 +22,7 @@ const Home = () => {
   return (
     <Container
       sx={{
-        minHeight:"79vh",
+        minHeight: "79vh",
         py: 5,
         display: "flex",
         flexDirection: "column",
@@ -45,25 +39,25 @@ const Home = () => {
 
       {/* PAGİNATİON */}
       <Stack spacing={2}>
-      <Pagination
-      count={totalPages}
-      page={currentPage}
-      onChange={handleChangePage}
-      sx={{
-        '& .MuiPaginationItem-root': {
-          '&.Mui-selected': {
-            backgroundColor: '#006300',
-            color: 'white',
-            '&:hover': {
-              backgroundColor: '#00630070',
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handleChangePage}
+          sx={{
+            "& .MuiPaginationItem-root": {
+              "&.Mui-selected": {
+                backgroundColor: "#006300",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#00630070",
+                },
+              },
+              "&:hover": {
+                backgroundColor: "#00630050",
+              },
             },
-          },
-          '&:hover': {
-            backgroundColor: '#00630050',
-          },
-        },
-      }}
-    />
+          }}
+        />
       </Stack>
     </Container>
   );

@@ -52,7 +52,6 @@ const useBlogRequest = () => {
     try {
       const { data } = await axiosToken.post(`/${path}/`, formData);
       const addData = data.data;
-      console.log("adddata",addData)
       dispatch(addRequestSuccess({ path, addData }));
       if (path === "comments") {
         getRequest("comments", 10000000);
@@ -84,8 +83,6 @@ const useBlogRequest = () => {
       const { data } = await axiosToken.post(`/blogs/${blogId}/postLike`);
       dispatch(postLikeSuccess({ data, blogId }));
       return data
-      // getRequest("blogs");
-      // getBlog(blogId);
     } catch (err) {
       dispatch(fetchfail());
       if (err.response.data.message === "NoPermission: You must login.") {

@@ -25,7 +25,10 @@ export default function BlogCard({
   countOfVisitors,
   _id,
 }) {
+  const { user } = useSelector((state) => state.auth);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [liked, setLiked] = useState(likes.some((item) => item === user?._id));
+  const [likeCount, setLikeCount] = useState(likes.length);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const { loading } = useSelector((state) => state.blog);
@@ -36,7 +39,16 @@ export default function BlogCard({
   const handleClose = () => {
     setAnchorEl(null);
   };
-// console.log("blogCard",_id)
+
+  const handleLike = () => {
+    if (liked) {
+      setLikeCount((prevCount) => prevCount - 1);
+    } else {
+      setLikeCount((prevCount) => prevCount + 1);
+    }
+    setLiked(!liked);
+  };
+console.log("blogCard",_id)
 // console.log("blogcard",comments)
   return (
     <Card
@@ -173,10 +185,13 @@ export default function BlogCard({
           <>
             <Box>
               <IconButtons
-                id={_id}
-                likes={likes}
-                countOfVisitors={countOfVisitors}
-                comments={comments}
+                 id={_id}
+                 likes={likes}
+                 countOfVisitors={countOfVisitors}
+                 comments={comments}
+                 liked={liked}
+                 likeCount={likeCount}
+                 onLike={handleLike}
               />
             </Box>
             <Button

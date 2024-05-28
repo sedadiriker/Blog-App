@@ -7,9 +7,7 @@ import EditBlogModal from "../components/Modals/EditBlogModal";
 import ShowComment from "../components/ShowComment";
 import IconButtons from "../components/IconButtons";
 import DeleteModal from "../components/Modals/DeleteModal";
-import Stack from "@mui/material/Stack";
-import CircularProgress from "@mui/material/CircularProgress";
-import { Loader } from "../styles/globalStyles";
+import Loading from "../components/Loading";
 
 const BlogDetail = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -51,7 +49,7 @@ const BlogDetail = () => {
   }, []);
 
   useEffect(() => {
-    const writerUser = users.find((user) => user._id === blog?.userId);
+    const writerUser = users.find((user) => user._id === blog?.userId?._id);
     setWriter(writerUser);
   }, []);
 
@@ -61,17 +59,11 @@ const BlogDetail = () => {
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
   return (
     <>
       {loading ? (
-        <Box
-          minHeight={"79vh"}
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          <Loader/>
-        </Box>
+        <Loading/>
       ) : (
         <Container
           sx={{
