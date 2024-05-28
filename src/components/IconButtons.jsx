@@ -5,7 +5,7 @@ import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import { useNavigate } from "react-router-dom";
 import useBlogRequest from "../hooks/useBlogRequest";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const IconButtons = ({
   id,
@@ -14,29 +14,30 @@ const IconButtons = ({
   path,
   setShowComment,
   comments = [],
-  liked,
-  likeCount,
-  onLike,
+  didUserLike
 }) => {
   const navigate = useNavigate();
   const { postLike } = useBlogRequest();
-  const { blog } = useSelector((state) => state.blog);
+  const { like } = useSelector(state => state.blog);
+  const [likeCount, setLikeCount] = useState(likes);
+  const {blog } = useSelector((state) => state.blog);
+  
+  const likeColor = didUserLike ? "#A73159" : "#A7315950";
 
-  const likeColor = liked ? "#A73159" : "#A7315950";
 
-  const handleLike = async () => {
-    await postLike(id);
-    onLike();
-  };
-
+  useEffect(() => {
+    like?.blogId === id &&
+      setLikeCount(like?.data?.countOfLikes)
+  }, [like,id]);
+console.log("icon",like)
   return (
     <>
       <IconButton
         aria-label="add to favorites"
         sx={{ fontSize: "1rem" }}
-        onClick={handleLike}
+        onClick={() => postLike(id)}
       >
-        {likeCount} <FavoriteIcon sx={{ color: likeColor }} />
+        {likeCount!== null ? likeCount : likes?.length} <FavoriteIcon sx={{ color: likeColor }} />
       </IconButton>
       <IconButton
         aria-label="comment"

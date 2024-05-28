@@ -25,13 +25,11 @@ export default function BlogCard({
   countOfVisitors,
   _id,
 }) {
-  const { user } = useSelector((state) => state.auth);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [liked, setLiked] = useState(likes.some((item) => item === user?._id));
-  const [likeCount, setLikeCount] = useState(likes.length);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  const { loading } = useSelector((state) => state.blog);
+  const { loading, like } = useSelector((state) => state.blog);
+  const { user } = useSelector((state) => state.auth);
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -40,19 +38,10 @@ export default function BlogCard({
     setAnchorEl(null);
   };
 
-  const handleLike = () => {
-    if (liked) {
-      setLikeCount((prevCount) => prevCount - 1);
-    } else {
-      setLikeCount((prevCount) => prevCount + 1);
-    }
-    setLiked(!liked);
-  };
-console.log("blogCard",_id)
-// console.log("blogcard",comments)
+  // console.log("blogcard",comments)
   return (
     <Card
-    // onClick={(e) => setId(_id)}
+      // onClick={(e) => setId(_id)}
       sx={{
         width: { xs: 320, md: 550 },
         margin: "auto",
@@ -185,13 +174,11 @@ console.log("blogCard",_id)
           <>
             <Box>
               <IconButtons
-                 id={_id}
-                 likes={likes}
-                 countOfVisitors={countOfVisitors}
-                 comments={comments}
-                 liked={liked}
-                 likeCount={likeCount}
-                 onLike={handleLike}
+                id={_id}
+                likes={like?.blogId === _id ? like?.data?.countOfLikes : likes.length}
+                didUserLike={like?.blogId === _id ? like?.data?.didUserLike : likes.some((item) => item === user?._id)}
+                countOfVisitors={countOfVisitors}
+                comments={comments}
               />
             </Box>
             <Button
