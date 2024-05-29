@@ -24,6 +24,7 @@ const CategoryPage = () => {
       const categoryBlogs = blogs.filter(
         (blog) => blog.categoryId === category._id
       );
+      // Şuan pek farketmiyor ama çok fazla blog olduğunu düşünürsek hepsini çekip filter işlemi yapmaktansa backendden sadece ilgili kategoriye ait blogları çekmek performans açısından daha iyi olabilir. "const res = await axiosToken(`/blogs/?search[categoryId]=${id}`);"
       setCategoryBlogs(categoryBlogs);
     }
   }, [categoryName]);

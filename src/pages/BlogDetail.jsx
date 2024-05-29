@@ -16,7 +16,7 @@ const BlogDetail = () => {
   const [showComment, setShowComment] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const { users, blog,like } = useSelector((state) => state.blog);
+  const { users, blog, like } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
   const { getRequest, deleteRequest, getBlog } = useBlogRequest();
   const { id } = useParams();
@@ -50,9 +50,10 @@ const BlogDetail = () => {
 
   useEffect(() => {
     const writerUser = users.find((user) => user._id === blog?.userId?._id);
-    console.log("writteruser",writerUser)
+    console.log("writteruser", writerUser);
     setWriter(writerUser);
-  }, []);
+    // admin token ile bütün kullanıcıları aldıktan sonra blog yazarını bulabiliyoruz. dependency kısmına users yazmayınca farklı yazarların blogları arasında gezince sayfayı yenilemezsek writer güncellenmiyor.
+  }, [users]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -61,14 +62,14 @@ const BlogDetail = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  console.log("detail",user._id )
-  console.log("detail2",blog.userId._id )
-  console.log("users",users)
-  console.log(blog)
+  console.log("detail", user._id);
+  console.log("detail2", blog?.userId?._id);
+  console.log("users", users);
+  console.log(blog);
   return (
     <>
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : (
         <Container
           sx={{
@@ -159,16 +160,40 @@ const BlogDetail = () => {
           </Typography>
 
           {/* ICONS */}
-          <Box justifySelf="flex-start" sx={{ width: "100%" }}>
-            <IconButtons
-              id={id}
-              likes={blog?.likes.length}
-              countOfVisitors={blog?.countOfVisitors}
-              path={"blogdetail"}
-              setShowComment={setShowComment}
-              comments={blog?.comments}
-              didUserLike={like?.blogId === id ? like?.data?.didUserLike : blog?.likes.some((item) => item === user?._id)}
-            />
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            sx={{ width: "100%" }}
+          >
+            <Box>
+              <IconButtons
+                id={id}
+                likes={blog?.likes.length}
+                countOfVisitors={blog?.countOfVisitors}
+                path={"blogdetail"}
+                setShowComment={setShowComment}
+                comments={blog?.comments}
+                didUserLike={
+                  like?.blogId === id
+                    ? like?.data?.didUserLike
+                    : blog?.likes.some((item) => item === user?._id)
+                }
+              />
+            </Box>
+            {user._id === blog?.userId?._id ? (
+              <Box>
+                <Button sx={{ color: "green" }} onClick={handleEdit}>
+                  Update
+                </Button>
+                <Button sx={{ color: "brown" }} onClick={handleDelete}>
+                  Delete
+                </Button>
+              </Box>
+            ) : (
+              ""
+            )}
+            {/*userId içindeki _id'ye bakmamız lazım. 
+               update-delete butonlarını yorumların üstüne alıp, diğer iconlarla aynı box'ın içinde sağa sola yasladım. */}
           </Box>
 
           {/* COMMENTS */}
@@ -176,18 +201,6 @@ const BlogDetail = () => {
             <>
               <ShowComment blog={blog} />
             </>
-          ) : (
-            ""
-          )}
-          {user._id === blog?.userId ? (
-            <Box>
-              <Button sx={{ color: "green" }} onClick={handleEdit}>
-                Update
-              </Button>
-              <Button sx={{ color: "brown" }} onClick={handleDelete}>
-                Delete
-              </Button>
-            </Box>
           ) : (
             ""
           )}
