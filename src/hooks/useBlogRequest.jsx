@@ -15,7 +15,7 @@ import { toastSuccessNotify, toastErrorNotify } from "../helper/ToastNotify";
 import { useNavigate } from "react-router-dom";
 
 const useBlogRequest = () => {
-  const { axiosToken } = useAxios();
+  const { axiosToken, axiosAdminToken } = useAxios();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,9 +26,16 @@ const useBlogRequest = () => {
       if (limit !== null) {
         url += `?limit=${limit}`;
       }
-      const { data } = await axiosToken(url);
-      const getData = data.data;
-      dispatch(getRequestSuccess({ path, getData }));
+      if (path === "users") {
+        const { data } = await axiosAdminToken(url);
+        const getData = data.data;
+        dispatch(getRequestSuccess({ path, getData }));
+        // useAxios tarafında neden bu şekilde yaptığımızı yazdım.
+      } else {
+        const { data } = await axiosToken(url);
+        const getData = data.data;
+        dispatch(getRequestSuccess({ path, getData }));
+      }
     } catch (error) {
       dispatch(fetchfail());
       toastErrorNotify(`Failed to load ${path}`);
@@ -82,7 +89,7 @@ const useBlogRequest = () => {
     try {
       const { data } = await axiosToken.post(`/blogs/${blogId}/postLike`);
       dispatch(postLikeSuccess({ data, blogId }));
-      return data
+      return data;
     } catch (err) {
       dispatch(fetchfail());
       if (err.response.data.message === "NoPermission: You must login.") {
