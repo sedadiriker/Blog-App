@@ -37,9 +37,11 @@ const useAuthRequest = () => {
       try {
         const { data } = await axiosBase.post("/users/", userInfo);
         dispatch(registerSuccess(data));
+        toastSuccessNotify("Register process successful");
         navigate("/");
       } catch (error) {
         dispatch(fetchFail());
+        toastErrorNotify("Register failed");
         console.log(error)
       }
     };

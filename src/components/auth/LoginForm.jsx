@@ -52,7 +52,7 @@ const LoginForm = () => {
           }}
         >
           <TextField
-            placeholder="test@test.com"
+            placeholder="testuser"
             label="username"
             name="username"
             id="username"
@@ -85,7 +85,7 @@ const LoginForm = () => {
           />
 
           <TextField
-          placeholder="123456Cl*"
+          placeholder="1234Blog*"
             label="Password"
             name="password"
             id="password"

@@ -19,6 +19,8 @@ const Home = () => {
   useEffect(() => {
     getBlogsPage(currentPage, 8);
   }, [currentPage]);
+  
+  console.log(blogs)
   return (
     <Container
       sx={{

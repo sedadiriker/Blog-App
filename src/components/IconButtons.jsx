@@ -29,7 +29,7 @@ const IconButtons = ({
     like?.blogId === id &&
       setLikeCount(like?.data?.countOfLikes)
   }, [like,id]);
-console.log("icon",likes)
+// console.log("icon",likes)
   return (
     <>
       <IconButton
